@@ -1,550 +1,700 @@
 import { useState } from "react";
 import { QRCodeSVG } from "qrcode.react";
 import {
-  Instagram,
-  Linkedin,
-  Mail,
   Phone,
-  Link2,
-  User,
-  Briefcase,
-  Building,
-  Sparkles,
+  Mail,
+  MapPin,
   RotateCw,
   Printer,
-  Cpu,
-  Layers,
-  Palette,
+  Sparkles,
   Check,
-  Bookmark,
-  Edit
+  Sliders,
+  LayoutGrid,
+  ArrowRight,
+  ShieldCheck
 } from "lucide-react";
 
-// ── Custom Branded SVG Icons for Cards ─────────────────────────────────────
+// ── Victory Hotels Vector Logo Component ─────────────────────────────────────
+// Faithfully reproduces the star + winged V crest + circular ring from the user's card
+export const VictoryHotelsLogo = ({
+  size = 48,
+  variant = "gold",
+  customColor
+}: {
+  size?: number;
+  variant?: "gold" | "silver" | "dark" | "white" | "custom";
+  customColor?: string;
+}) => {
+  const gradId = `victory-grad-${Math.random().toString(36).substr(2, 9)}`;
 
-const NFCWave = ({ size = 22 }: { size?: number }) => (
-  <svg width={size} height={size} viewBox="0 0 22 22" fill="none">
-    <circle cx="11" cy="11" r="2" fill="currentColor" />
-    <path d="M7.5 7.5a4.95 4.95 0 0 1 7 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-    <path d="M4.5 4.5a9.19 9.19 0 0 1 13 13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-  </svg>
-);
+  let fillStyle = `url(#${gradId})`;
+  if (variant === "dark") fillStyle = "#1f2937";
+  if (variant === "white") fillStyle = "#ffffff";
+  if (variant === "custom" && customColor) fillStyle = customColor;
 
-const InstagramSVG = ({ size = 24 }: { size?: number }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-    <rect x="2" y="2" width="20" height="20" rx="6" stroke="currentColor" strokeWidth="1.8" />
-    <circle cx="12" cy="12" r="4.5" stroke="currentColor" strokeWidth="1.8" />
-    <circle cx="17.5" cy="6.5" r="1.3" fill="currentColor" />
-  </svg>
-);
-
-const LinkedInSVG = ({ size = 24 }: { size?: number }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-    <rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" strokeWidth="1.8" />
-    <path d="M7 10v7M7 7v.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
-    <path d="M11 17v-3.5c0-1.5 1-2.5 2.5-2.5S16 11 16 13v4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
-    <path d="M11 10v7" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
-  </svg>
-);
-
-const ContactSVG = ({ size = 24 }: { size?: number }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 5.2 12.9a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
-
-const CustomSVG = ({ size = 24 }: { size?: number }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-    <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1.8" />
-    <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
-
-// Get platform icon helper
-const getPlatformIcon = (pId: string, size = 24) => {
-  switch (pId) {
-    case "instagram": return <InstagramSVG size={size} />;
-    case "linkedin": return <LinkedInSVG size={size} />;
-    case "contact": return <ContactSVG size={size} />;
-    default: return <CustomSVG size={size} />;
-  }
-};
-
-// ── Premium Micro-Components ────────────────────────────────────────────────
-
-// Corner bracket marks for premium card faces
-const CornerMarks = ({ color }: { color: string }) => {
-  const len = 12;
-  const t = 1.2;
-  const off = 10;
-  const style = { position: "absolute" as const, width: len, height: len };
-  const line = { background: color, position: "absolute" as const };
   return (
-    <>
-      <div style={{ ...style, top: off, left: off }}>
-        <div style={{ ...line, top: 0, left: 0, width: t, height: len }} />
-        <div style={{ ...line, top: 0, left: 0, width: len, height: t }} />
-      </div>
-      <div style={{ ...style, top: off, right: off }}>
-        <div style={{ ...line, top: 0, right: 0, width: t, height: len }} />
-        <div style={{ ...line, top: 0, right: 0, width: len, height: t }} />
-      </div>
-      <div style={{ ...style, bottom: off, left: off }}>
-        <div style={{ ...line, bottom: 0, left: 0, width: t, height: len }} />
-        <div style={{ ...line, bottom: 0, left: 0, width: len, height: t }} />
-      </div>
-      <div style={{ ...style, bottom: off, right: off }}>
-        <div style={{ ...line, bottom: 0, right: 0, width: t, height: len }} />
-        <div style={{ ...line, bottom: 0, right: 0, width: len, height: t }} />
-      </div>
-    </>
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 100 105"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className="drop-shadow-sm"
+    >
+      <defs>
+        {variant === "gold" && (
+          <linearGradient id={gradId} x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#FFE89C" />
+            <stop offset="35%" stopColor="#D4AF37" />
+            <stop offset="70%" stopColor="#AA7C11" />
+            <stop offset="100%" stopColor="#F5D061" />
+          </linearGradient>
+        )}
+        {variant === "silver" && (
+          <linearGradient id={gradId} x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#FFFFFF" />
+            <stop offset="50%" stopColor="#B8C2CC" />
+            <stop offset="100%" stopColor="#E2E8F0" />
+          </linearGradient>
+        )}
+      </defs>
+
+      {/* Top 5-Point Star */}
+      <polygon
+        points="50,2 52.4,9.5 60,9.5 53.8,14 56.2,21.5 50,17 43.8,21.5 46.2,14 40,9.5 47.6,9.5"
+        fill={fillStyle}
+      />
+
+      {/* Bottom Golden Ring Base */}
+      <circle
+        cx="50"
+        cy="72"
+        r="18"
+        stroke={fillStyle}
+        strokeWidth="5"
+        fill="none"
+      />
+
+      {/* LEFT WING - Outer Feather */}
+      <path
+        d="M 50,72 C 45,62 30,48 34,26 C 39,38 48,56 50,72 Z"
+        fill={fillStyle}
+      />
+
+      {/* LEFT WING - Inner Feather */}
+      <path
+        d="M 50,72 C 46,62 36,50 41,32 C 44,42 48,58 50,72 Z"
+        fill={fillStyle}
+      />
+
+      {/* RIGHT WING - Outer Feather */}
+      <path
+        d="M 50,72 C 55,62 70,48 66,26 C 61,38 52,56 50,72 Z"
+        fill={fillStyle}
+      />
+
+      {/* RIGHT WING - Inner Feather */}
+      <path
+        d="M 50,72 C 54,62 64,50 59,32 C 56,42 52,58 50,72 Z"
+        fill={fillStyle}
+      />
+    </svg>
   );
 };
 
-// ── Finished Styling Helpers ───────────────────────────────────────────────
+// ── Physical NFC Chip Touchpoint Overlay (100% Static Print-Ready Vector) ─────
+// Positioned vertically centered (top 50%) and horizontally at the end of the card (right edge).
+// Features Wi-Fi/NFC contactless signal icon & text turned 90 degrees clockwise with static concentric ripples.
+const NFCChipTouchpoint = ({
+  color = "#D4AF37",
+  textColor = "rgba(255, 255, 255, 0.5)",
+  glowColor = "rgba(212, 175, 55, 0.15)"
+}: {
+  color?: string;
+  textColor?: string;
+  glowColor?: string;
+}) => (
+  <div className="absolute right-2.5 top-1/2 -translate-y-1/2 flex flex-row items-center justify-center pointer-events-none z-30 select-none">
+    {/* Concentric Static Ripple Rings around embedded NFC chip (No Animation - Print Ready) */}
+    <div className="relative flex items-center justify-center w-[64px] h-[64px]">
+      {/* Outer Static Ripple Ring 3 */}
+      <div
+        className="absolute w-[60px] h-[60px] rounded-full border border-dashed opacity-40"
+        style={{ borderColor: color }}
+      />
+      {/* Outer Static Ripple Ring 2 */}
+      <div
+        className="absolute w-[46px] h-[46px] rounded-full border opacity-55"
+        style={{ borderColor: color, background: glowColor }}
+      />
+      {/* Inner Static Ripple Ring 1 */}
+      <div
+        className="absolute w-[34px] h-[34px] rounded-full border opacity-80"
+        style={{ borderColor: color }}
+      />
 
-const getBrushedMetalConfig = (finish: "gold" | "silver" | "black") => {
-  let baseBg = "";
-  let textGrad = "";
-  let accentGrad = "";
-  let borderColor = "";
-  let labelColor = "";
+      {/* Center NFC Chip Print Target with Wi-Fi / Contactless Signal Icon turned 90 degrees clockwise */}
+      <div
+        className="w-7 h-7 rounded-full flex items-center justify-center shadow-sm"
+        style={{ backgroundColor: color, color: "#0a0a0d" }}
+      >
+        <div className="rotate-90 flex items-center justify-center">
+          {/* Wi-Fi / Contactless Signal Wave Icon */}
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
+            <path d="M5 12.55a11 11 0 0 1 14 0" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
+            <path d="M8.5 15.55a6 6 0 0 1 7 0" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
+            <circle cx="12" cy="18.5" r="1.5" fill="currentColor" />
+          </svg>
+        </div>
+      </div>
+    </div>
 
-  if (finish === "gold") {
-    baseBg = "linear-gradient(135deg, #18150d 0%, #2f2510 50%, #18150d 100%)";
-    textGrad = "linear-gradient(135deg, #FFE89C 0%, #D4AF37 50%, #F5D061 100%)";
-    accentGrad = "linear-gradient(135deg, #f6e3a6 0%, #c59f27 50%, #f6e3a6 100%)";
-    borderColor = "rgba(212, 175, 55, 0.4)";
-    labelColor = "#bda054";
-  } else if (finish === "silver") {
-    baseBg = "linear-gradient(135deg, #141517 0%, #272a2e 50%, #141517 100%)";
-    textGrad = "linear-gradient(135deg, #FFFFFF 0%, #a1a1aa 50%, #e4e4e7 100%)";
-    accentGrad = "linear-gradient(135deg, #ffffff 0%, #71717a 50%, #ffffff 100%)";
-    borderColor = "rgba(161, 161, 170, 0.4)";
-    labelColor = "#9ea2a8";
-  } else {
-    // Obsidian Black
-    baseBg = "linear-gradient(135deg, #090a0d 0%, #1a1b22 50%, #090a0d 100%)";
-    textGrad = "linear-gradient(135deg, #a1a1aa 0%, #3f3f46 50%, #8b8d99 100%)";
-    accentGrad = "linear-gradient(135deg, #52525b 0%, #18181b 50%, #52525b 100%)";
-    borderColor = "rgba(255, 255, 255, 0.12)";
-    labelColor = "#71717a";
-  }
+    {/* Sideways Text Label turned 90 degrees clockwise */}
+    <div className="w-4 h-[64px] flex items-center justify-center -ml-1">
+      <span
+        className="text-[5.5px] tracking-[0.25em] uppercase font-bold rotate-90 origin-center whitespace-nowrap"
+        style={{ color: textColor }}
+      >
+        TAP HERE
+      </span>
+    </div>
+  </div>
+);
 
-  return { baseBg, textGrad, accentGrad, borderColor, labelColor };
-};
-
-// ── Static Card Component (NFC Touchpoint: 90-deg rotated platform icon and text on the right) ──
-
-interface CardProps {
+// ── Design Preset Interfaces & Data ───────────────────────────────────────
+export interface ManagerCardData {
   name: string;
   title: string;
   company: string;
-  handle: string;
-  sub: string;
-  qrLink: string;
+  phone: string;
+  email: string;
+  website: string;
+  address: string;
   tagline: string;
-  variant: "standard" | "premium" | "glass";
-  accentColor: string;
-  metalFinish: "gold" | "silver" | "black";
-  glassBlobStyle: string;
-  platform: string;
-  flipped: boolean;
-  setFlipped: React.Dispatch<React.SetStateAction<boolean>>;
+  qrLink: string;
 }
 
-function ShowroomCard({
-  name, title, company, handle, sub, qrLink, tagline,
-  variant, accentColor, metalFinish, glassBlobStyle, platform,
-  flipped, setFlipped
-}: CardProps) {
-  const metal = getBrushedMetalConfig(metalFinish);
+export const DEFAULT_VICTORY_DATA: ManagerCardData = {
+  name: "Vittal Jadhav",
+  title: "Corporate General Manager",
+  company: "Victory Hotels",
+  phone: "+91 9849545958",
+  email: "vittal.j@victoryhotels.in",
+  website: "www.victoryhotels.in",
+  address: "E-601 Giridhari Executive Park Suncity, Hyderabad-500058",
+  tagline: "Executive Hospitality & Service Excellence",
+  qrLink: "https://victoryhotels.in/vcard/vittal-jadhav"
+};
 
-  // Static backdrop colors for Glass Finish
-  const getGlassBackdrop = () => {
-    let color1 = "#ff007f";
-    let color2 = "#8200ff";
-    if (glassBlobStyle === "sunset") {
-      color1 = "#ff7b00";
-      color2 = "#ff0055";
-    } else if (glassBlobStyle === "nebula") {
-      color1 = "#00c3ff";
-      color2 = "#7000ff";
-    }
-    return (
-      <>
-        <div className="absolute w-[200px] h-[200px] rounded-full filter blur-[32px] opacity-60 top-[-50px] left-[-30px]" style={{ background: color1 }} />
-        <div className="absolute w-[180px] h-[180px] rounded-full filter blur-[36px] opacity-50 bottom-[-40px] right-[-20px]" style={{ background: color2 }} />
-      </>
-    );
+export interface DesignStyle {
+  id: string;
+  name: string;
+  category: string;
+  tagline: string;
+  description: string;
+  badge: string;
+}
+
+export const DESIGN_STYLES: DesignStyle[] = [
+  {
+    id: "royal-gold",
+    name: "24K Royal Obsidian",
+    category: "Luxury Metal",
+    tagline: "Brushed Obsidian & Metallic Gold",
+    description: "Deep matte black titanium alloy with 24K gold foil trim line & right-edge NFC chip target.",
+    badge: "Most Executive"
+  },
+  {
+    id: "classic-heritage",
+    name: "Classic Heritage Ivory",
+    category: "Textured Paper",
+    tagline: "Elevated Marble & Gold Embossed",
+    description: "Traditional paper card layout with right-edge centered NFC chip print target & gold logo.",
+    badge: "Original Re-Imagined"
+  },
+  {
+    id: "midnight-sapphire",
+    name: "Midnight Sapphire & Rose Gold",
+    category: "Modern 5-Star",
+    tagline: "Deep Navy & Metallic Rose Gold",
+    description: "Dark midnight hue with cyan-rose gold accents and right-edge contactless NFC tap zone.",
+    badge: "5-Star Resort Vibe"
+  },
+  {
+    id: "champagne-silk",
+    name: "Champagne Silk & Walnut",
+    category: "Boutique Luxury",
+    tagline: "Warm Champagne & Deep Charcoal",
+    description: "Soft satin champagne backdrop with walnut serif typography & right-edge chip print overlay.",
+    badge: "Warm Hospitality"
+  },
+  {
+    id: "cyber-glass",
+    name: "Frosted Cyber-Glassmorphism",
+    category: "Digital NFC",
+    tagline: "Translucent Epoxy & Gold Circuits",
+    description: "Futuristic frosted glass panel with dynamic light refraction and embedded right-edge NFC target.",
+    badge: "Smart NFC Card"
+  }
+];
+
+// ── Individual Card Renderer Component ─────────────────────────────────────
+interface RenderCardProps {
+  styleId: string;
+  data: ManagerCardData;
+  flipped: boolean;
+  onFlip?: () => void;
+  scale?: number;
+}
+
+export function RenderExecutiveCard({ styleId, data, flipped, onFlip, scale = 1 }: RenderCardProps) {
+  const containerStyle = {
+    width: "340px",
+    height: "194px",
+    transform: scale !== 1 ? `scale(${scale})` : undefined,
+    transformOrigin: "center center"
   };
 
-  return (
-    <div className="w-full h-full relative cursor-pointer select-none" onClick={() => setFlipped(prev => !prev)}>
-      {/* Glass Blobs behind Glass Finish */}
-      {variant === "glass" && (
-        <div className="absolute inset-0 rounded-2xl overflow-hidden pointer-events-none z-0">
-          {getGlassBackdrop()}
-        </div>
-      )}
-
-      {/* Static Shadow Cast */}
+  // 1. ROYAL GOLD & OBSIDIAN (24K Gold Alloy)
+  if (styleId === "royal-gold") {
+    return (
       <div
-        className="absolute inset-0 rounded-2xl z-0 pointer-events-none"
-        style={{
-          background: "rgba(0, 0, 0, 0.5)",
-          filter: "blur(14px)",
-          transform: "translate3d(0, 8px, -10px) scale(0.96)",
-        }}
-      />
-
-      {/* Card Content - Conditionally render to avoid stacking/double text */}
-      <div className="w-full h-full relative z-10">
-
-        {/* 1. STANDARD CARD */}
-        {variant === "standard" && !flipped && (
+        className="relative rounded-none overflow-hidden cursor-pointer select-none shadow-2xl"
+        style={containerStyle}
+        onClick={onFlip}
+      >
+        {/* Card Front */}
+        {!flipped ? (
           <div
-            className="w-full h-full rounded-2xl overflow-hidden flex justify-between items-center p-5 border border-white/5 relative"
+            className="w-full h-full p-4 flex flex-col justify-between relative border border-[#D4AF37]/30"
             style={{
-              background: `linear-gradient(135deg, #0d0f14 0%, ${accentColor}12 60%, #06070a 100%)`,
-              boxShadow: `inset 0 0 0 1.5px ${accentColor}25, 0 10px 25px rgba(0,0,0,0.45)`,
+              background: "linear-gradient(135deg, #0a0a0d 0%, #1a1921 50%, #0a0a0d 100%)"
             }}
           >
+            {/* Fine Brushed Texture Overlay */}
             <div
-              className="absolute inset-0 pointer-events-none opacity-[0.05] rounded-2xl"
+              className="absolute inset-0 opacity-[0.08] pointer-events-none"
               style={{
-                backgroundImage: `radial-gradient(circle, ${accentColor} 1px, transparent 1px)`,
-                backgroundSize: "16px 16px",
+                backgroundImage:
+                  "repeating-linear-gradient(90deg, #fff 0px, #fff 1px, transparent 1px, transparent 3px)"
               }}
             />
-            {/* Left Column - Info */}
-            <div className="flex flex-col justify-between h-full flex-grow z-10 text-left">
-              <div>
-                <p className="text-[7.5px] font-medium tracking-[0.25em] uppercase mb-1 text-left" style={{ color: `${accentColor}cc` }}>
-                  {tagline || "Digital NFC Card"}
-                </p>
-                <h2 className="text-lg font-bold tracking-tight text-white/95 leading-tight text-left">{name || "Your Name"}</h2>
-                <p className="text-[10px] font-light text-white/50 text-left">{title || "Your Title"} · {company || "Company"}</p>
-              </div>
-              <div>
-                <p className="text-[8px] tracking-[0.2em] uppercase text-white/30 mb-0.5 text-left">Platform Handler</p>
-                <p className="text-xs font-semibold text-left truncate max-w-[170px]" style={{ color: accentColor }}>{handle || "@yourhandle"}</p>
-                <p className="text-[9px] text-white/45 font-light text-left truncate max-w-[170px]">{sub || "Tap card to connect"}</p>
-              </div>
-            </div>
 
-            {/* Right Column - Concentric Wave NFC Touchpoint with Sideways Text and Sideways Icon */}
-            <div className="flex flex-row items-center justify-center flex-shrink-0 select-none z-10 mr-[-6px]">
-              <div className="relative flex items-center justify-center w-[72px] h-[72px] rounded-full border" style={{ borderColor: `${accentColor}11`, background: `${accentColor}03` }}>
-                <div className="absolute flex items-center justify-center w-[54px] h-[54px] rounded-full border" style={{ borderColor: `${accentColor}22`, background: `${accentColor}06` }}>
-                  <div className="absolute flex items-center justify-center w-9 h-9 rounded-full border bg-white/[0.04]" style={{ color: accentColor, borderColor: `${accentColor}44` }}>
-                    <div className="-rotate-90 flex items-center justify-center">
-                      {getPlatformIcon(platform, 15)}
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="w-4 h-[72px] flex items-center justify-center">
-                <span className="text-[5.5px] tracking-[0.3em] uppercase font-bold text-white/30 -rotate-90 origin-center whitespace-nowrap select-none">
-                  Tap Here
+            {/* Right Edge Vertically Centered NFC Chip Touchpoint Target */}
+            <NFCChipTouchpoint color="#F5D061" textColor="rgba(245,208,97,0.7)" glowColor="rgba(212,175,55,0.12)" />
+
+            {/* Header: Name & Title (Left) + Logo (Center-Right) */}
+            <div className="flex justify-between items-start z-10 max-w-[245px]">
+              <div className="flex flex-col text-left">
+                <span className="text-[7.5px] uppercase tracking-[0.25em] font-semibold text-[#D4AF37]/80">
+                  {data.company}
                 </span>
+                <h2
+                  className="text-base font-bold tracking-tight text-transparent bg-clip-text leading-tight"
+                  style={{
+                    backgroundImage:
+                      "linear-gradient(135deg, #FFF2B2 0%, #D4AF37 50%, #F5D061 100%)",
+                    fontFamily: "'Cinzel', serif"
+                  }}
+                >
+                  {data.name}
+                </h2>
+                <p className="text-[9.5px] font-medium text-white/70 tracking-wide mt-0.5">
+                  {data.title}
+                </p>
+              </div>
+              <div className="flex flex-col items-center">
+                <VictoryHotelsLogo size={34} variant="gold" />
               </div>
             </div>
-          </div>
-        )}
 
-        {variant === "standard" && flipped && (
-          <div
-            className="w-full h-full rounded-2xl overflow-hidden flex items-center justify-between px-6 border border-white/5 relative"
-            style={{
-              background: `linear-gradient(135deg, #050608 0%, ${accentColor}1f 50%, #0d0f14 100%)`,
-              boxShadow: `inset 0 0 0 1.5px ${accentColor}25, 0 10px 25px rgba(0,0,0,0.45)`,
-            }}
-          >
+            {/* Center divider line with gold gradient */}
             <div
-              className="absolute inset-0 pointer-events-none opacity-[0.05] rounded-2xl"
+              className="w-[245px] h-[1px] my-1 z-10"
               style={{
-                backgroundImage: `radial-gradient(circle, ${accentColor} 1px, transparent 1px)`,
-                backgroundSize: "16px 16px",
+                background:
+                  "linear-gradient(90deg, rgba(212,175,55,0.6) 0%, rgba(212,175,55,0.1) 100%)"
               }}
             />
-            <div className="flex flex-col justify-between h-full py-5 text-left z-10">
-              <div style={{ color: accentColor }}><NFCWave size={22} /></div>
-              <div>
-                <p className="text-[7.5px] font-medium tracking-[0.25em] uppercase text-white/30 text-left">Quick Link</p>
-                <p className="text-sm font-bold text-white/90 truncate max-w-[150px] text-left">{name || "Your Name"}</p>
-                <p className="text-[9px] text-white/50 mt-0.5 font-light truncate max-w-[150px] text-left">{handle || "@yourhandle"}</p>
-              </div>
-              <div className="flex items-center gap-1.5 text-white/40 text-left">
-                <span className="text-[7px] tracking-wider uppercase text-left font-semibold">NFC Enabled</span>
-              </div>
-            </div>
-            <div className="z-10 flex flex-col items-center">
-              <div className="rounded-xl p-2 bg-white flex-shrink-0" style={{
-                border: `1.5px solid ${accentColor}`,
-                boxShadow: `0 8px 24px ${accentColor}25`,
-              }}>
-                <QRCodeSVG value={qrLink || "https://google.com"} size={76} bgColor="transparent" fgColor="#0d0f14" level="M" />
-              </div>
-            </div>
-          </div>
-        )}
 
-        {/* 2. PREMIUM METAL CARD */}
-        {variant === "premium" && !flipped && (
-          <div
-            className="w-full h-full rounded-2xl overflow-hidden relative"
-            style={{
-              background: `
-                repeating-linear-gradient(
-                  90deg,
-                  rgba(255, 255, 255, 0.007) 0px,
-                  rgba(255, 255, 255, 0.007) 1px,
-                  transparent 1px,
-                  transparent 3.5px
-                ),
-                ${metal.baseBg}
-              `,
-              boxShadow: `0 0 0 1px ${metal.borderColor}, inset 0 0 15px rgba(0,0,0,0.8), 0 15px 35px rgba(0,0,0,0.5)`,
-            }}
-          >
-            <CornerMarks color={`${metal.labelColor}44`} />
-            <div className="w-full h-full flex justify-between items-center p-5 z-10 select-none relative">
-              {/* Left Column - Info */}
-              <div className="flex flex-col justify-between h-full flex-grow text-left">
-                <div>
-                  <p className="text-[7.5px] font-semibold tracking-[0.35em] uppercase mb-1 text-left" style={{ color: metal.labelColor }}>
-                    {tagline || "Metal Premium Series"}
-                  </p>
-                  <h2 className="text-lg font-bold tracking-tight bg-clip-text text-transparent leading-tight text-left" style={{ backgroundImage: metal.textGrad }}>
-                    {name || "Your Name"}
-                  </h2>
-                  <p className="text-[10px] font-medium tracking-wide text-white/40 text-left">{title || "Your Title"} · {company || "Company"}</p>
-                </div>
-                <div>
-                  <p className="text-[8px] tracking-[0.2em] uppercase text-white/20 mb-0.5 text-left">Custom ID</p>
-                  <p className="text-xs font-bold tracking-wide text-left truncate max-w-[170px]" style={{ color: metal.labelColor }}>{handle || "@yourhandle"}</p>
-                  <p className="text-[9px] text-white/30 font-medium text-left truncate max-w-[170px]">{sub || "Tap to connect"}</p>
-                </div>
-              </div>
-
-              {/* Right Column - Premium Concentric Waves with rotated elements */}
-              <div className="flex flex-row items-center justify-center flex-shrink-0 select-none z-10 mr-[-6px]">
-                <div className="relative flex items-center justify-center w-[72px] h-[72px] rounded-full border border-white/[0.02] bg-white/[0.003]">
-                  <div className="absolute flex items-center justify-center w-[54px] h-[54px] rounded-full border border-white/[0.05] bg-white/[0.007]">
-                    <div className="absolute flex items-center justify-center w-9 h-9 rounded-full border bg-white/[0.02]" style={{ color: metal.labelColor, borderColor: `${metal.labelColor}44` }}>
-                      <div className="-rotate-90 flex items-center justify-center">
-                        {getPlatformIcon(platform, 15)}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="w-4 h-[72px] flex items-center justify-center">
-                  <span className="text-[5.5px] tracking-[0.3em] uppercase font-bold text-white/20 -rotate-90 origin-center whitespace-nowrap select-none">
-                    Tap Here
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {variant === "premium" && flipped && (
-          <div
-            className="w-full h-full rounded-2xl overflow-hidden relative"
-            style={{
-              background: `
-                repeating-linear-gradient(
-                  90deg,
-                  rgba(255, 255, 255, 0.007) 0px,
-                  rgba(255, 255, 255, 0.007) 1px,
-                  transparent 1px,
-                  transparent 3.5px
-                ),
-                ${metal.baseBg}
-              `,
-              boxShadow: `0 0 0 1px ${metal.borderColor}, inset 0 0 15px rgba(0,0,0,0.8), 0 15px 35px rgba(0,0,0,0.5)`,
-            }}
-          >
-            <CornerMarks color={`${metal.labelColor}44`} />
-            <div className="w-full h-full flex items-center justify-between px-7 relative">
-              <div className="flex flex-col justify-between h-full py-5 text-left z-10">
-                <div style={{ color: metal.labelColor }}><NFCWave size={24} /></div>
-                <div>
-                  <p className="text-[7.5px] font-semibold tracking-[0.35em] uppercase text-left" style={{ color: metal.labelColor }}>Member ID</p>
-                  <h3 className="text-sm font-bold tracking-wide bg-clip-text text-transparent truncate max-w-[150px] text-left" style={{ backgroundImage: metal.textGrad }}>
-                    {name || "Your Name"}
-                  </h3>
-                  <p className="text-[9px] text-white/35 font-medium truncate max-w-[150px] text-left">{handle || "@yourhandle"}</p>
-                </div>
-                <div className="flex items-center gap-1.5 text-white/20 text-left">
-                  <span className="text-[7px] tracking-widest uppercase text-left font-semibold">Metallic engraving</span>
-                </div>
-              </div>
-              <div className="z-10 flex flex-col items-center">
-                <div className="p-[1.5px] rounded-[14px] flex-shrink-0" style={{
-                  background: metal.accentGrad,
-                  boxShadow: "0 6px 20px rgba(0,0,0,0.4)"
-                }}>
-                  <div className="rounded-[12.5px] p-2 bg-[#090a0d]">
-                    <QRCodeSVG value={qrLink || "https://google.com"} size={76} bgColor="transparent" fgColor={metal.labelColor} level="M" />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* 3. GLASSMORPHISM CARD */}
-        {variant === "glass" && !flipped && (
-          <div
-            className="w-full h-full rounded-2xl overflow-hidden flex justify-between items-center p-5 relative"
-            style={{
-              background: "rgba(255, 255, 255, 0.03)",
-              backdropFilter: "blur(24px) saturate(140%)",
-              WebkitBackdropFilter: "blur(24px) saturate(140%)",
-              border: "1px solid rgba(255, 255, 255, 0.15)",
-              boxShadow: "inset 0 1px 1px rgba(255,255,255,0.2), 0 10px 25px rgba(0,0,0,0.3)",
-            }}
-          >
-            {/* Left Column - Info */}
-            <div className="flex flex-col justify-between h-full flex-grow z-10 text-left">
-              <div>
-                <p className="text-[7.5px] font-medium tracking-[0.28em] uppercase mb-1 text-left" style={{ color: `${accentColor}ee` }}>
-                  {tagline || "Frosted Glass Concept"}
+            {/* Footer Contact Details */}
+            <div className="flex justify-between items-end z-10 text-left max-w-[245px]">
+              <div className="flex flex-col gap-0.5 text-[8.5px] text-white/80 font-light w-full">
+                <p className="flex items-center gap-1 font-medium text-[#F5D061]">
+                  <Phone size={9} className="text-[#D4AF37]" />
+                  <span>{data.phone}</span>
                 </p>
-                <h2 className="text-lg font-bold tracking-tight text-white/90 leading-tight text-left">{name || "Your Name"}</h2>
-                <p className="text-[10px] font-light text-white/45 text-left">{title || "Your Title"} · {company || "Company"}</p>
-              </div>
-              <div>
-                <p className="text-[8px] tracking-[0.2em] uppercase text-white/25 mb-0.5 text-left">Interface</p>
-                <p className="text-xs font-semibold text-white/95 text-left truncate max-w-[170px]">{handle || "@yourhandle"}</p>
-                <p className="text-[9px] text-white/35 font-light text-left truncate max-w-[170px]">{sub || "Tap to connect"}</p>
+                <p className="flex items-center gap-1 text-white/60 truncate">
+                  <Mail size={9} className="text-[#D4AF37]" />
+                  <span>{data.email}</span>
+                </p>
+                <p className="flex items-center gap-1 text-white/50 text-[7.5px] leading-tight truncate">
+                  <MapPin size={9} className="flex-shrink-0 text-[#D4AF37]" />
+                  <span className="truncate">{data.address}</span>
+                </p>
               </div>
             </div>
 
-            {/* Right Column - Glass Concentric Waves with rotated elements */}
-            <div className="flex flex-row items-center justify-center flex-shrink-0 select-none z-10 mr-[-6px]">
-              <div className="relative flex items-center justify-center w-[72px] h-[72px] rounded-full border" style={{ borderColor: "rgba(255,255,255,0.03)", background: "rgba(255,255,255,0.01)" }}>
-                <div className="absolute flex items-center justify-center w-[54px] h-[54px] rounded-full border" style={{ borderColor: "rgba(255,255,255,0.07)", background: "rgba(255,255,255,0.02)" }}>
-                  <div className="absolute flex items-center justify-center w-9 h-9 rounded-full border" style={{ color: accentColor, borderColor: "rgba(255,255,255,0.18)", background: "rgba(255,255,255,0.04)" }}>
-                    <div className="-rotate-90 flex items-center justify-center">
-                      {getPlatformIcon(platform, 15)}
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="w-4 h-[72px] flex items-center justify-center">
-                <span className="text-[5.5px] tracking-[0.3em] uppercase font-bold text-white/25 -rotate-90 origin-center whitespace-nowrap select-none">
-                  Tap Here
+            {/* Bottom 24K Gold Foil Strip */}
+            <div
+              className="absolute bottom-0 left-0 right-0 h-[3px]"
+              style={{
+                background:
+                  "linear-gradient(90deg, #B38728 0%, #FBF5B7 50%, #B38728 100%)"
+              }}
+            />
+          </div>
+        ) : (
+          /* Card Back */
+          <div
+            className="w-full h-full p-5 flex items-center justify-between relative border border-[#D4AF37]/30"
+            style={{
+              background: "linear-gradient(135deg, #08080a 0%, #16151c 100%)"
+            }}
+          >
+            <div className="flex flex-col text-left justify-between h-full py-1 z-10 max-w-[160px]">
+              <div className="flex items-center gap-2">
+                <VictoryHotelsLogo size={28} variant="gold" />
+                <span
+                  className="text-xs font-bold tracking-wider text-[#D4AF37]"
+                  style={{ fontFamily: "'Cinzel', serif" }}
+                >
+                  VICTORY
                 </span>
               </div>
-            </div>
-          </div>
-        )}
-
-        {variant === "glass" && flipped && (
-          <div
-            className="w-full h-full rounded-2xl overflow-hidden flex items-center justify-between px-6 relative"
-            style={{
-              background: "rgba(255, 255, 255, 0.02)",
-              backdropFilter: "blur(24px) saturate(140%)",
-              WebkitBackdropFilter: "blur(24px) saturate(140%)",
-              border: "1px solid rgba(255, 255, 255, 0.12)",
-              boxShadow: "inset 0 1px 1px rgba(255,255,255,0.2), 0 10px 25px rgba(0,0,0,0.3)",
-            }}
-          >
-            <div className="flex flex-col justify-between h-full py-5 text-left z-10">
-              <div style={{ color: accentColor }}><NFCWave size={22} /></div>
               <div>
-                <p className="text-[7.5px] font-medium tracking-[0.28em] uppercase text-left" style={{ color: `${accentColor}cc` }}>Digital Portal</p>
-                <p className="text-sm font-bold text-white/90 truncate max-w-[150px] text-left">{name || "Your Name"}</p>
-                <p className="text-[9px] text-white/45 font-light truncate max-w-[150px] text-left">{handle || "@yourhandle"}</p>
+                <p className="text-[8px] uppercase tracking-widest text-white/40">
+                  Digital Card Portal
+                </p>
+                <p className="text-xs font-bold text-white mt-0.5">{data.name}</p>
+                <p className="text-[8.5px] text-[#D4AF37] mt-0.5">{data.title}</p>
               </div>
-              <div className="flex items-center gap-1.5 text-white/30 text-left">
-                <span className="text-[7px] tracking-wider uppercase text-left font-semibold" style={{ color: `${accentColor}bb` }}>Induction loop back</span>
-              </div>
+              <p className="text-[7.5px] text-white/40 flex items-center gap-1">
+                <ShieldCheck size={10} className="text-[#D4AF37]" /> Verified Executive
+              </p>
             </div>
-            <div className="z-10 flex flex-col items-center">
-              <div className="rounded-xl p-2 border relative overflow-hidden flex-shrink-0" style={{
-                background: "rgba(255, 255, 255, 0.88)",
-                borderColor: "rgba(255, 255, 255, 0.25)",
-                boxShadow: "0 8px 30px rgba(0,0,0,0.25)",
-              }}>
-                <QRCodeSVG value={qrLink || "https://google.com"} size={76} bgColor="transparent" fgColor="#111" level="M" />
+
+            {/* QR Code Frame */}
+            <div className="z-10 p-1.5 rounded-xl bg-gradient-to-tr from-[#B38728] via-[#FBF5B7] to-[#B38728] shadow-lg">
+              <div className="bg-[#0a0a0d] p-1.5 rounded-lg">
+                <QRCodeSVG value={data.qrLink} size={72} bgColor="transparent" fgColor="#F5D061" level="M" />
               </div>
             </div>
           </div>
         )}
       </div>
+    );
+  }
+
+  // 2. CLASSIC HERITAGE IVORY (Elevated Traditional Marble)
+  if (styleId === "classic-heritage") {
+    return (
+      <div
+        className="relative rounded-none overflow-hidden cursor-pointer select-none shadow-xl border border-stone-300"
+        style={containerStyle}
+        onClick={onFlip}
+      >
+        {!flipped ? (
+          <div
+            className="w-full h-full p-4 flex flex-col justify-between relative text-stone-900"
+            style={{
+              background: "#FAF8F5",
+              backgroundImage:
+                "radial-gradient(circle at 50% 50%, rgba(240, 235, 224, 0.6) 0%, rgba(250, 248, 245, 1) 100%)"
+            }}
+          >
+            {/* Right Edge Vertically Centered NFC Chip Touchpoint Target */}
+            <NFCChipTouchpoint color="#9E7D3B" textColor="#654b1f" glowColor="rgba(158,125,59,0.12)" />
+
+            {/* Gold Trim Bottom Line */}
+            <div
+              className="absolute bottom-0 left-0 right-0 h-[4px]"
+              style={{
+                background: "linear-gradient(90deg, #9E7D3B 0%, #D4AF37 50%, #9E7D3B 100%)"
+              }}
+            />
+
+            {/* Top Row: Name & Title (Left) + Phone (Right) */}
+            <div className="flex justify-between items-start text-left z-10 max-w-[245px]">
+              <div>
+                <h2
+                  className="text-base font-bold text-stone-900 leading-tight"
+                  style={{ fontFamily: "'Cinzel', serif" }}
+                >
+                  {data.name}
+                </h2>
+                <p className="text-[9.5px] font-semibold text-amber-800 tracking-wide">
+                  {data.title}
+                </p>
+              </div>
+              <div className="text-right">
+                <p className="text-[9px] font-bold text-stone-800 flex items-center justify-end gap-1">
+                  <Phone size={8} className="text-amber-700" />
+                  <span>{data.phone}</span>
+                </p>
+              </div>
+            </div>
+
+            {/* Center Logo & Company Title */}
+            <div className="flex flex-col items-center justify-center my-auto z-10 max-w-[245px]">
+              <VictoryHotelsLogo size={38} variant="gold" />
+              <h3
+                className="text-xs font-extrabold tracking-wider text-stone-900 mt-1"
+                style={{ fontFamily: "'Cinzel', serif" }}
+              >
+                {data.company}
+              </h3>
+            </div>
+
+            {/* Footer Address Bar */}
+            <div className="w-[245px] pt-1.5 border-t border-stone-300/80 z-10 text-center">
+              <p className="text-[8px] text-stone-600 font-medium tracking-tight truncate">
+                {data.address}
+              </p>
+            </div>
+          </div>
+        ) : (
+          <div
+            className="w-full h-full p-5 flex items-center justify-between relative bg-[#F7F4EE] text-stone-900 border-b-4 border-amber-600"
+            style={{
+              backgroundImage: "radial-gradient(circle, rgba(220,210,190,0.2) 1px, transparent 1px)",
+              backgroundSize: "12px 12px"
+            }}
+          >
+            <div className="flex flex-col text-left justify-between h-full py-1 z-10 max-w-[170px]">
+              <div>
+                <VictoryHotelsLogo size={32} variant="gold" />
+                <h4 className="text-xs font-bold text-stone-900 mt-1">{data.company}</h4>
+                <p className="text-[8.5px] text-amber-800 font-medium">{data.tagline}</p>
+              </div>
+              <div>
+                <p className="text-[8px] text-stone-500">Scan QR or Tap card to save contact</p>
+                <p className="text-[9px] font-bold text-stone-800 mt-0.5">{data.website}</p>
+              </div>
+            </div>
+
+            <div className="bg-white p-2 rounded-xl border border-stone-300 shadow-md">
+              <QRCodeSVG value={data.qrLink} size={72} bgColor="#FFFFFF" fgColor="#27251F" level="M" />
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  // 3. MIDNIGHT SAPPHIRE & ROSE GOLD (Modern 5-Star Resort)
+  if (styleId === "midnight-sapphire") {
+    return (
+      <div
+        className="relative rounded-none overflow-hidden cursor-pointer select-none shadow-2xl border border-cyan-900/40"
+        style={containerStyle}
+        onClick={onFlip}
+      >
+        {!flipped ? (
+          <div
+            className="w-full h-full p-4 flex flex-col justify-between relative text-white"
+            style={{
+              background: "linear-gradient(135deg, #09111e 0%, #132238 60%, #080d17 100%)"
+            }}
+          >
+            {/* Right Edge Vertically Centered NFC Chip Touchpoint Target */}
+            <NFCChipTouchpoint color="#38BDF8" textColor="#38BDF8" glowColor="rgba(56,189,248,0.12)" />
+
+            {/* Ambient Cyan Soft Glow */}
+            <div className="absolute top-[-30px] right-[-30px] w-28 h-28 bg-cyan-500/10 rounded-full blur-2xl pointer-events-none" />
+
+            <div className="flex justify-between items-start z-10 text-left max-w-[245px]">
+              <div>
+                <span className="text-[7.5px] uppercase tracking-[0.2em] text-cyan-400 font-bold">
+                  5-Star Hospitality
+                </span>
+                <h2 className="text-base font-bold text-white tracking-tight leading-tight mt-0.5">
+                  {data.name}
+                </h2>
+                <p className="text-[9.5px] text-rose-300 font-medium">{data.title}</p>
+              </div>
+              <VictoryHotelsLogo size={34} variant="custom" customColor="#F4A261" />
+            </div>
+
+            <div className="flex justify-between items-end z-10 text-left max-w-[245px]">
+              <div className="flex flex-col gap-0.5 text-[8.5px] text-slate-300 w-full">
+                <p className="font-semibold text-rose-300 flex items-center gap-1">
+                  <Phone size={9} className="text-cyan-400" /> {data.phone}
+                </p>
+                <p className="text-slate-400 flex items-center gap-1 truncate">
+                  <Mail size={9} className="text-cyan-400" /> {data.email}
+                </p>
+                <p className="text-slate-400 flex items-center gap-1 text-[7.5px] truncate">
+                  <MapPin size={9} className="text-cyan-400 flex-shrink-0" /> {data.address}
+                </p>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div
+            className="w-full h-full p-5 flex items-center justify-between relative text-white"
+            style={{
+              background: "linear-gradient(135deg, #070c14 0%, #101c2e 100%)"
+            }}
+          >
+            <div className="flex flex-col text-left justify-between h-full py-1 z-10">
+              <VictoryHotelsLogo size={32} variant="custom" customColor="#F4A261" />
+              <div>
+                <p className="text-[8px] uppercase tracking-widest text-cyan-400">
+                  {data.company}
+                </p>
+                <p className="text-xs font-bold text-white">{data.name}</p>
+                <p className="text-[8.5px] text-slate-400">{data.title}</p>
+              </div>
+              <p className="text-[7.5px] text-slate-500">Tap to connect via NFC</p>
+            </div>
+
+            <div className="bg-slate-900/90 p-2 rounded-xl border border-cyan-500/30 shadow-lg">
+              <QRCodeSVG value={data.qrLink} size={72} bgColor="transparent" fgColor="#38BDF8" level="M" />
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  // 4. SATIN CHAMPAGNE SILK (Boutique Executive)
+  if (styleId === "champagne-silk") {
+    return (
+      <div
+        className="relative rounded-none overflow-hidden cursor-pointer select-none shadow-xl border border-amber-200"
+        style={containerStyle}
+        onClick={onFlip}
+      >
+        {!flipped ? (
+          <div
+            className="w-full h-full p-4 flex flex-col justify-between relative text-stone-900"
+            style={{
+              background: "linear-gradient(135deg, #F9F6F0 0%, #EFE8DA 100%)"
+            }}
+          >
+            {/* Right Edge Vertically Centered NFC Chip Touchpoint Target */}
+            <NFCChipTouchpoint color="#B8860B" textColor="#443525" glowColor="rgba(184,134,11,0.12)" />
+
+            <div className="flex justify-between items-center z-10 text-left border-b border-amber-900/10 pb-2 max-w-[245px]">
+              <div>
+                <h2
+                  className="text-base font-bold text-stone-900 leading-tight"
+                  style={{ fontFamily: "'Cinzel', serif" }}
+                >
+                  {data.name}
+                </h2>
+                <p className="text-[9.5px] font-semibold text-amber-900">{data.title}</p>
+              </div>
+              <VictoryHotelsLogo size={32} variant="gold" />
+            </div>
+
+            <div className="flex justify-between items-end z-10 text-left pt-1 max-w-[245px]">
+              <div className="flex flex-col gap-0.5 text-[8.5px] text-stone-700">
+                <p className="font-bold text-amber-950">{data.phone}</p>
+                <p className="text-stone-600">{data.email}</p>
+                <p className="text-[7.5px] text-stone-500 truncate">{data.address}</p>
+              </div>
+              <span className="text-[7px] uppercase tracking-widest text-amber-800 font-bold bg-amber-200/50 px-2 py-0.5 rounded-full">
+                {data.company}
+              </span>
+            </div>
+          </div>
+        ) : (
+          <div
+            className="w-full h-full p-5 flex items-center justify-between relative bg-[#EFE8DA] text-stone-900"
+            onClick={onFlip}
+          >
+            <div className="flex flex-col text-left justify-between h-full py-1">
+              <VictoryHotelsLogo size={30} variant="gold" />
+              <div>
+                <p className="text-[8px] uppercase tracking-wider text-amber-900 font-semibold">
+                  Victory Hotels Executive
+                </p>
+                <p className="text-xs font-bold text-stone-900">{data.name}</p>
+              </div>
+              <p className="text-[8px] text-stone-500">{data.website}</p>
+            </div>
+
+            <div className="bg-white p-2 rounded-xl shadow-md border border-amber-200">
+              <QRCodeSVG value={data.qrLink} size={72} bgColor="#FFF" fgColor="#443525" level="M" />
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  // 5. FROSTED CYBER-GLASSMORPHISM (Digital Smart NFC)
+  return (
+    <div
+      className="relative rounded-none overflow-hidden cursor-pointer select-none shadow-2xl border border-white/20"
+      style={containerStyle}
+      onClick={onFlip}
+    >
+      {/* Background Glow Blobs */}
+      <div className="absolute inset-0 z-0 bg-slate-950 overflow-hidden">
+        <div className="absolute -top-10 -left-10 w-36 h-36 bg-amber-500/30 rounded-full blur-2xl" />
+        <div className="absolute -bottom-10 -right-10 w-36 h-36 bg-indigo-500/30 rounded-full blur-2xl" />
+      </div>
+
+      {!flipped ? (
+        <div
+          className="w-full h-full p-4 flex flex-col justify-between relative z-10 text-white backdrop-blur-xl bg-white/[0.05]"
+        >
+          {/* Right Edge Vertically Centered NFC Chip Touchpoint Target */}
+          <NFCChipTouchpoint color="#FBBF24" textColor="#FBBF24" glowColor="rgba(251,191,36,0.15)" />
+
+          <div className="flex justify-between items-start text-left max-w-[245px]">
+            <div>
+              <span className="text-[7px] uppercase tracking-[0.3em] font-bold text-amber-400">
+                Digital NFC Card
+              </span>
+              <h2 className="text-base font-bold text-white leading-tight mt-0.5">{data.name}</h2>
+              <p className="text-[9.5px] text-amber-200/90 font-medium">{data.title}</p>
+            </div>
+            <VictoryHotelsLogo size={34} variant="gold" />
+          </div>
+
+          <div className="flex justify-between items-end text-left max-w-[245px]">
+            <div className="flex flex-col gap-0.5 text-[8.5px] text-white/80 w-full">
+              <p className="font-semibold text-amber-300">{data.phone}</p>
+              <p className="text-white/60 truncate">{data.email}</p>
+              <p className="text-white/40 text-[7.5px] truncate">{data.address}</p>
+            </div>
+          </div>
+        </div>
+      ) : (
+        <div className="w-full h-full p-5 flex items-center justify-between relative z-10 text-white backdrop-blur-xl bg-white/[0.06]">
+          <div className="flex flex-col text-left justify-between h-full py-1">
+            <VictoryHotelsLogo size={28} variant="gold" />
+            <div>
+              <p className="text-[8px] uppercase tracking-wider text-amber-400 font-semibold">
+                {data.company}
+              </p>
+              <p className="text-xs font-bold text-white">{data.name}</p>
+            </div>
+            <p className="text-[7.5px] text-white/50">Tap NFC or scan QR code</p>
+          </div>
+
+          <div className="bg-white/90 p-2 rounded-xl shadow-lg border border-white/40">
+            <QRCodeSVG value={data.qrLink} size={72} bgColor="transparent" fgColor="#111" level="M" />
+          </div>
+        </div>
+      )}
     </div>
   );
 }
 
-// ── App Container ──────────────────────────────────────────────────────────
-
-const PLATFORMS = [
-  { id: "instagram", name: "Instagram", color: "#e1306c", icon: Instagram },
-  { id: "linkedin", name: "LinkedIn", color: "#0ea5e9", icon: Linkedin },
-  { id: "contact", name: "Contact/VCARD", color: "#7c6ef5", icon: Mail },
-  { id: "custom", name: "Custom URL", color: "#10b981", icon: Link2 },
-];
-
-const FINISHES = [
-  { id: "standard", name: "Standard Matte", desc: "Velvety anti-glare finish" },
-  { id: "premium", name: "Premium Metal", desc: "Luxury brushed solid weight" },
-  { id: "glass", name: "Glassmorphism", desc: "Translucent epoxy circuit concept" },
-] as const;
-
+// ── Main App Application Component ─────────────────────────────────────────
 export default function App() {
-  const [name, setName] = useState("Jane Doe");
-  const [title, setTitle] = useState("Senior Product Designer");
-  const [company, setCompany] = useState("AeroLabs");
-  const [handle, setHandle] = useState("@jane_design");
-  const [sub, setSub] = useState("Tap to access my portfolio");
-  const [qrLink, setQrLink] = useState("https://instagram.com/jane_design");
-  const [platform, setPlatform] = useState("instagram");
-  const [variant, setVariant] = useState<"standard" | "premium" | "glass">("standard");
-  const [accentColor, setAccentColor] = useState("#e1306c");
-  const [tagline, setTagline] = useState("Creative & Lifestyle");
+  const [data, setData] = useState<ManagerCardData>(DEFAULT_VICTORY_DATA);
+  const [selectedStyleId, setSelectedStyleId] = useState<string>("royal-gold");
+  const [previewFlipped, setPreviewFlipped] = useState<boolean>(false);
+  const [viewMode, setViewMode] = useState<"inspector" | "gallery">("gallery");
 
-  // Variant sub-settings
-  const [metalFinish, setMetalFinish] = useState<"gold" | "silver" | "black">("gold");
-  const [glassBlobStyle, setGlassBlobStyle] = useState<"aurora" | "sunset" | "nebula">("aurora");
-
-  // Flip Preview State
-  const [flipped, setFlipped] = useState(false);
-
-  // Apply templates
-  const applyTemplate = (pId: string) => {
-    setPlatform(pId);
-    setFlipped(false);
-    if (pId === "instagram") {
-      setTagline("Creative & Lifestyle");
-      setHandle("@jane_design");
-      setSub("Follow for daily snapshots");
-      setQrLink("https://instagram.com/jane_design");
-      setAccentColor("#e1306c");
-    } else if (pId === "linkedin") {
-      setTagline("Professional Network");
-      setHandle("Jane Doe");
-      setSub("Connect on LinkedIn");
-      setQrLink("https://linkedin.com/in/jane-doe");
-      setAccentColor("#0ea5e9");
-    } else if (pId === "contact") {
-      setTagline("Get in Touch");
-      setHandle("hello@aerolabs.design");
-      setSub("+1 (555) 489-3921");
-      setQrLink("mailto:hello@aerolabs.design");
-      setAccentColor("#7c6ef5");
-    } else {
-      setTagline("My Personal Portal");
-      setHandle("aerolabs.design/jane");
-      setSub("Scan to view my ecosystem");
-      setQrLink("https://aerolabs.design/jane");
-      setAccentColor("#10b981");
-    }
-  };
+  const currentStyle =
+    DESIGN_STYLES.find((s) => s.id === selectedStyleId) || DESIGN_STYLES[0];
 
   const handlePrint = () => {
     window.print();
@@ -552,435 +702,410 @@ export default function App() {
 
   return (
     <div
-      className="min-h-screen w-full flex flex-col justify-between py-8 px-6 md:px-12 text-[#f0f0f5]"
+      className="min-h-screen w-full flex flex-col justify-between py-6 px-4 md:px-10 text-slate-100"
       style={{
-        background: "radial-gradient(ellipse 95% 75% at 50% 15%, #0d0c1c 0%, #050508 100%)",
-        fontFamily: "'Sora', sans-serif",
+        background:
+          "radial-gradient(ellipse 95% 75% at 50% 10%, #0d111a 0%, #04060a 100%)",
+        fontFamily: "'Plus Jakarta Sans', sans-serif"
       }}
     >
-      {/* Dynamic Printing CSS */}
-      <style dangerouslySetInnerHTML={{
-        __html: `
-        .print-only {
-          display: none !important;
-        }
-        @media print {
-          .no-print {
-            display: none !important;
+      {/* Dynamic Printing CSS for Standard CR-80 Card Blueprint */}
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
+          @media print {
+            .no-print { display: none !important; }
+            .print-only {
+              display: flex !important;
+              flex-direction: column !important;
+              align-items: center !important;
+              justify-content: center !important;
+              background: white !important;
+              min-height: 100vh !important;
+              width: 100vw !important;
+              padding: 20px !important;
+              margin: 0 !important;
+            }
+            .card-unit {
+              width: 3.5in !important;
+              height: 2.0in !important;
+              page-break-inside: avoid !important;
+            }
           }
-          .print-only {
-            display: flex !important;
-            flex-direction: column !important;
-            align-items: center !important;
-            justify-content: center !important;
-            background: white !important;
-            height: 100vh !important;
-            width: 100vw !important;
-            padding: 0 !important;
-            margin: 0 !important;
-          }
-          .print-card-wrapper {
-            display: flex !important;
-            flex-direction: row !important;
-            align-items: center !important;
-            justify-content: center !important;
-            gap: 40px !important;
-          }
-          .print-title {
-            display: block !important;
-            color: #111 !important;
-            font-size: 14px !important;
-            margin-bottom: 10px !important;
-            text-align: center !important;
-          }
-          .card-unit {
-            width: 3.5in !important;
-            height: 2.0in !important;
-            position: relative !important;
-            box-shadow: none !important;
-            transform: none !important;
-            border: 1px solid #ddd !important;
-            border-radius: 0.25in !important;
-            page-break-inside: avoid !important;
-          }
-        }
-      `}} />
+          .print-only { display: none; }
+        `
+        }}
+      />
 
-      {/* Header (No print) */}
-      <header className="no-print flex justify-between items-center mb-8 border-b border-white/5 pb-4">
-        <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-[#6c5ce7] to-[#7c6ef5] flex items-center justify-center shadow-lg shadow-[#7c6ef5]/20">
-            <Cpu size={18} className="text-white" />
+      {/* App Header (No Print) */}
+      <header className="no-print flex flex-col md:flex-row justify-between items-center gap-4 mb-6 border-b border-slate-800 pb-4">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-600 via-amber-500 to-yellow-300 p-[1px] shadow-lg shadow-amber-500/20">
+            <div className="w-full h-full bg-slate-950 rounded-[11px] flex items-center justify-center">
+              <VictoryHotelsLogo size={24} variant="gold" />
+            </div>
           </div>
-          <div>
-            <h1 className="text-base font-bold tracking-tight text-white/95">NFC Social Studio</h1>
-            <p className="text-[9px] text-white/35 font-medium uppercase tracking-[0.15em]">Standard Business Dimensions · 3.5 × 2.0 in</p>
+          <div className="text-left">
+            <div className="flex items-center gap-2">
+              <h1
+                className="text-lg font-extrabold text-white tracking-tight"
+                style={{ fontFamily: "'Cinzel', serif" }}
+              >
+                Victory Hotels
+              </h1>
+              <span className="text-[10px] bg-amber-500/10 border border-amber-500/30 text-amber-300 px-2 py-0.5 rounded-full font-semibold">
+                Executive NFC Studio
+              </span>
+            </div>
+            <p className="text-[11px] text-slate-400 font-medium">
+              Card Designs for Corporate General Manager · Vittal Jadhav
+            </p>
           </div>
         </div>
-        <div className="flex items-center gap-4">
-          <span className="text-[10px] bg-white/5 border border-white/10 px-2.5 py-1 rounded-full text-white/50 font-medium">v1.2.0</span>
+
+        {/* View Switcher & Actions */}
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => setViewMode("gallery")}
+            className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all ${
+              viewMode === "gallery"
+                ? "bg-amber-500 text-slate-950 shadow-md shadow-amber-500/20"
+                : "bg-slate-900 border border-slate-800 text-slate-400 hover:text-white"
+            }`}
+          >
+            <LayoutGrid size={14} />
+            <span>5-Design Gallery</span>
+          </button>
+          <button
+            onClick={() => setViewMode("inspector")}
+            className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all ${
+              viewMode === "inspector"
+                ? "bg-amber-500 text-slate-950 shadow-md shadow-amber-500/20"
+                : "bg-slate-900 border border-slate-800 text-slate-400 hover:text-white"
+            }`}
+          >
+            <Sliders size={14} />
+            <span>Custom Inspector</span>
+          </button>
+          <button
+            onClick={handlePrint}
+            className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-gradient-to-r from-amber-600 to-yellow-500 hover:brightness-110 text-slate-950 text-xs font-bold shadow-lg shadow-amber-500/20"
+          >
+            <Printer size={14} />
+            <span>Print / PDF</span>
+          </button>
         </div>
       </header>
 
-      {/* Main Studio Grid (No print) */}
-      <main className="no-print flex-grow grid grid-cols-1 lg:grid-cols-12 gap-8 items-start my-auto max-w-7xl w-full mx-auto">
-
-        {/* Left Panel: Customize Details */}
-        <section className="lg:col-span-4 flex flex-col gap-6 bg-white/[0.02] border border-white/5 rounded-2xl p-5 backdrop-blur-xl">
-          <div className="flex items-center gap-2 border-b border-white/5 pb-3">
-            <Edit size={16} className="text-[#7c6ef5]" />
-            <h3 className="text-sm font-bold tracking-tight">1. Identity & Brand</h3>
+      {/* Typo Correction Banner Notice */}
+      <div className="no-print max-w-7xl w-full mx-auto mb-6 bg-gradient-to-r from-emerald-950/60 via-slate-900 to-slate-900 border border-emerald-500/30 rounded-2xl p-3.5 flex items-center justify-between">
+        <div className="flex items-center gap-3 text-left">
+          <div className="p-2 bg-emerald-500/20 text-emerald-400 rounded-xl">
+            <Check size={18} />
           </div>
-
-          {/* Brand select grid */}
-          <div className="flex flex-col gap-2">
-            <label className="text-[10px] font-semibold text-white/40 uppercase tracking-widest">Select Brand Base</label>
-            <div className="grid grid-cols-2 gap-2">
-              {PLATFORMS.map((p) => {
-                const Icon = p.icon;
-                const isSelected = platform === p.id;
-                return (
-                  <button
-                    key={p.id}
-                    onClick={() => applyTemplate(p.id)}
-                    className={`flex items-center gap-2 px-3 py-2.5 rounded-xl border text-xs font-semibold transition-all duration-200 text-left ${isSelected
-                        ? "bg-white/5 border-white/20 text-white shadow-md shadow-black/10"
-                        : "bg-transparent border-white/5 text-white/50 hover:bg-white/[0.01] hover:text-white/80"
-                      }`}
-                  >
-                    <div className="p-1 rounded-md" style={{ backgroundColor: isSelected ? `${p.color}22` : "rgba(255,255,255,0.03)", color: isSelected ? p.color : "inherit" }}>
-                      <Icon size={14} />
-                    </div>
-                    {p.name}
-                  </button>
-                );
-              })}
+          <div>
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-bold text-emerald-300">
+                Right-Edge NFC Chip Target & Wi-Fi Icon Applied
+              </span>
+              <span className="text-[9px] bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded-full font-semibold">
+                Updated Layout
+              </span>
             </div>
+            <p className="text-[11px] text-slate-300">
+              NFC Chip touchpoint graphic with Wi-Fi signal waves & 90° clockwise text is centered vertically at the right end of the card.
+            </p>
           </div>
+        </div>
+        <button
+          onClick={() => setData(DEFAULT_VICTORY_DATA)}
+          className="hidden md:flex items-center gap-1 text-[11px] text-amber-400 font-semibold bg-amber-500/10 border border-amber-500/30 px-3 py-1.5 rounded-xl hover:bg-amber-500/20"
+        >
+          <RotateCw size={12} /> Reset Victory Defaults
+        </button>
+      </div>
 
-          {/* Form details */}
-          <div className="flex flex-col gap-4">
-            <div className="flex flex-col gap-1.5">
-              <label className="text-[10px] font-semibold text-white/40 uppercase tracking-widest flex items-center gap-1">
-                <User size={10} /> Full Name
-              </label>
-              <input
-                type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                className="w-full bg-white/5 border border-white/5 hover:border-white/10 focus:border-[#7c6ef5]/50 px-3 py-2 rounded-xl text-xs text-white/90 placeholder-white/30 outline-none transition-all"
-                placeholder="Name"
-              />
-            </div>
-
-            <div className="grid grid-cols-2 gap-3">
-              <div className="flex flex-col gap-1.5">
-                <label className="text-[10px] font-semibold text-white/40 uppercase tracking-widest flex items-center gap-1">
-                  <Briefcase size={10} /> Job Title
-                </label>
-                <input
-                  type="text"
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
-                  className="w-full bg-white/5 border border-white/5 hover:border-white/10 focus:border-[#7c6ef5]/50 px-3 py-2 rounded-xl text-xs text-white/90 outline-none transition-all"
-                  placeholder="Title"
-                />
-              </div>
-              <div className="flex flex-col gap-1.5">
-                <label className="text-[10px] font-semibold text-white/40 uppercase tracking-widest flex items-center gap-1">
-                  <Building size={10} /> Company
-                </label>
-                <input
-                  type="text"
-                  value={company}
-                  onChange={(e) => setCompany(e.target.value)}
-                  className="w-full bg-white/5 border border-white/5 hover:border-white/10 focus:border-[#7c6ef5]/50 px-3 py-2 rounded-xl text-xs text-white/90 outline-none transition-all"
-                  placeholder="Company"
-                />
-              </div>
-            </div>
-
-            <div className="flex flex-col gap-1.5">
-              <label className="text-[10px] font-semibold text-white/40 uppercase tracking-widest flex items-center gap-1">
-                <Bookmark size={10} /> Tagline (Upper Accent)
-              </label>
-              <input
-                type="text"
-                value={tagline}
-                onChange={(e) => setTagline(e.target.value)}
-                className="w-full bg-white/5 border border-white/5 hover:border-white/10 focus:border-[#7c6ef5]/50 px-3 py-2 rounded-xl text-xs text-white/90 outline-none transition-all"
-                placeholder="Upper tagline"
-              />
-            </div>
-
-            <div className="flex flex-col gap-1.5">
-              <label className="text-[10px] font-semibold text-white/40 uppercase tracking-widest">Platform Handle / Detail</label>
-              <input
-                type="text"
-                value={handle}
-                onChange={(e) => setHandle(e.target.value)}
-                className="w-full bg-white/5 border border-white/5 hover:border-white/10 focus:border-[#7c6ef5]/50 px-3 py-2 rounded-xl text-xs text-white/90 outline-none transition-all"
-                placeholder="Handle"
-              />
-            </div>
-
-            <div className="flex flex-col gap-1.5">
-              <label className="text-[10px] font-semibold text-white/40 uppercase tracking-widest">Instruction Subtext</label>
-              <input
-                type="text"
-                value={sub}
-                onChange={(e) => setSub(e.target.value)}
-                className="w-full bg-white/5 border border-white/5 hover:border-white/10 focus:border-[#7c6ef5]/50 px-3 py-2 rounded-xl text-xs text-white/90 outline-none transition-all"
-                placeholder="Subtext"
-              />
-            </div>
-
-            <div className="flex flex-col gap-1.5">
-              <label className="text-[10px] font-semibold text-white/40 uppercase tracking-widest flex items-center gap-1">
-                <Link2 size={10} /> QR Code Destination Link
-              </label>
-              <input
-                type="text"
-                value={qrLink}
-                onChange={(e) => setQrLink(e.target.value)}
-                className="w-full bg-white/5 border border-white/5 hover:border-white/10 focus:border-[#7c6ef5]/50 px-3 py-2 rounded-xl text-xs text-white/90 outline-none transition-all text-[#7c6ef5] font-medium"
-                placeholder="QR Link URL"
-              />
-            </div>
-          </div>
-        </section>
-
-        {/* Center Panel: Showroom Card Viewport */}
-        <section className="lg:col-span-5 flex flex-col items-center justify-center gap-8 self-center">
-
-          {/* Card Stage with Glow backdrop */}
-          <div className="relative w-full flex items-center justify-center py-10 rounded-2xl bg-black/15 border border-white/[0.02] shadow-inner overflow-hidden min-h-[300px]">
-            {/* Ambient center background light */}
-            <div className="absolute w-[240px] h-[240px] rounded-full filter blur-[50px] opacity-15 pointer-events-none" style={{ backgroundColor: accentColor }} />
-
-            <div className="w-[340px] h-[194px] relative">
-              <ShowroomCard
-                name={name}
-                title={title}
-                company={company}
-                handle={handle}
-                sub={sub}
-                qrLink={qrLink}
-                tagline={tagline}
-                variant={variant}
-                accentColor={accentColor}
-                metalFinish={metalFinish}
-                glassBlobStyle={glassBlobStyle}
-                platform={platform}
-                flipped={flipped}
-                setFlipped={setFlipped}
-              />
+      {/* MAIN GALLERY VIEW */}
+      {viewMode === "gallery" && (
+        <main className="no-print max-w-7xl w-full mx-auto flex-grow flex flex-col gap-6">
+          <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+            <div className="text-left">
+              <h2 className="text-base font-bold text-white flex items-center gap-2">
+                <Sparkles className="text-amber-400" size={16} /> 5 Executive Design Options for Manager
+              </h2>
+              <p className="text-xs text-slate-400">
+                Click any card to flip front/back. Select a design to customize in detail.
+              </p>
             </div>
           </div>
 
-          {/* Quick Actions Tray */}
-          <div className="flex items-center gap-4">
-            <button
-              onClick={() => setFlipped(f => !f)}
-              className="flex items-center gap-2 px-4 py-2.5 rounded-xl border border-white/5 bg-white/[0.02] hover:bg-white/5 text-xs text-white/80 transition-all font-semibold"
-            >
-              <RotateCw size={13} className="text-white/50" />
-              Flip Preview
-            </button>
-            <button
-              onClick={handlePrint}
-              className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-tr from-[#6c5ce7] to-[#7c6ef5] hover:opacity-95 text-xs text-white font-semibold shadow-lg shadow-[#7c6ef5]/15"
-            >
-              <Printer size={13} />
-              Print Preview Layout
-            </button>
-          </div>
-        </section>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
+            {DESIGN_STYLES.map((style) => (
+              <div
+                key={style.id}
+                className={`bg-slate-900/60 border rounded-2xl p-5 flex flex-col justify-between backdrop-blur-xl transition-all duration-300 hover:border-amber-500/50 ${
+                  selectedStyleId === style.id
+                    ? "border-amber-500 ring-2 ring-amber-500/20 shadow-xl shadow-amber-500/5"
+                    : "border-slate-800 hover:bg-slate-900/90"
+                }`}
+              >
+                {/* Header & Badges */}
+                <div className="flex items-center justify-between mb-3 text-left">
+                  <div>
+                    <span className="text-[9px] uppercase tracking-wider font-semibold text-amber-400 bg-amber-500/10 px-2.5 py-0.5 rounded-full border border-amber-500/20">
+                      {style.category}
+                    </span>
+                    <h3 className="text-sm font-bold text-white mt-1">{style.name}</h3>
+                  </div>
+                  <span className="text-[10px] text-slate-400 font-medium bg-slate-800 px-2 py-1 rounded-lg">
+                    {style.badge}
+                  </span>
+                </div>
 
-        {/* Right Panel: Customize Finish & Visuals */}
-        <section className="lg:col-span-3 flex flex-col gap-6 bg-white/[0.02] border border-white/5 rounded-2xl p-5 backdrop-blur-xl">
-          <div className="flex items-center gap-2 border-b border-white/5 pb-3">
-            <Palette size={16} className="text-[#7c6ef5]" />
-            <h3 className="text-sm font-bold tracking-tight">2. Card Finishes</h3>
-          </div>
-
-          {/* Finish selector tab pills */}
-          <div className="flex flex-col gap-3">
-            <label className="text-[10px] font-semibold text-white/40 uppercase tracking-widest">Select Finish</label>
-            <div className="flex flex-col gap-2">
-              {FINISHES.map((f) => {
-                const isSelected = variant === f.id;
-                return (
-                  <button
-                    key={f.id}
-                    onClick={() => {
-                      setVariant(f.id);
-                      setFlipped(false);
-                    }}
-                    className={`flex flex-col gap-0.5 px-4 py-3 rounded-xl border text-left transition-all duration-200 ${isSelected
-                        ? "bg-white/5 border-white/20 text-white shadow-md shadow-black/10"
-                        : "bg-transparent border-white/5 text-white/40 hover:bg-white/[0.01] hover:text-white/60"
-                      }`}
-                  >
-                    <div className="flex items-center justify-between w-full">
-                      <span className="text-xs font-semibold">{f.name}</span>
-                      {isSelected && <div className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: accentColor }} />}
-                    </div>
-                    <span className="text-[9px] font-light text-white/30 truncate">{f.desc}</span>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Customizer Suboptions based on finish */}
-          {variant === "premium" && (
-            <div className="flex flex-col gap-3 pt-3 border-t border-white/5">
-              <label className="text-[10px] font-semibold text-white/40 uppercase tracking-widest flex items-center gap-1.5">
-                <Sparkles size={11} className="text-[#bda054]" /> Metal Alloy Finish
-              </label>
-              <div className="grid grid-cols-3 gap-2">
-                {(["gold", "silver", "black"] as const).map((finish) => (
-                  <button
-                    key={finish}
-                    onClick={() => setMetalFinish(finish)}
-                    className={`py-2 rounded-lg text-[10px] font-bold border transition-all ${metalFinish === finish
-                        ? "bg-white/5 border-white/25 text-white"
-                        : "bg-transparent border-white/5 text-white/40 hover:text-white/60"
-                      }`}
-                  >
-                    {finish === "gold" && "24K Gold"}
-                    {finish === "silver" && "Platinum"}
-                    {finish === "black" && "Obsidian"}
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {variant === "glass" && (
-            <div className="flex flex-col gap-3 pt-3 border-t border-white/5">
-              <label className="text-[10px] font-semibold text-white/40 uppercase tracking-widest flex items-center gap-1.5">
-                <Layers size={11} className="text-[#00c3ff]" /> Aurora Backlight
-              </label>
-              <div className="grid grid-cols-3 gap-2">
-                {(["aurora", "sunset", "nebula"] as const).map((glow) => (
-                  <button
-                    key={glow}
-                    onClick={() => setGlassBlobStyle(glow)}
-                    className={`py-2 rounded-lg text-[10px] font-bold border transition-all ${glassBlobStyle === glow
-                        ? "bg-white/5 border-white/25 text-white"
-                        : "bg-transparent border-white/5 text-white/40 hover:text-white/60"
-                      }`}
-                  >
-                    {glow === "aurora" && "Aurora Pink"}
-                    {glow === "sunset" && "Sunset Flare"}
-                    {glow === "nebula" && "Deep Nebula"}
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* Custom Accent Color overrides for Standard/Glass */}
-          {variant !== "premium" && (
-            <div className="flex flex-col gap-3 pt-3 border-t border-white/5">
-              <label className="text-[10px] font-semibold text-white/40 uppercase tracking-widest">Brand Accent Tone</label>
-              <div className="flex items-center gap-2.5">
-                <div className="relative w-8 h-8 rounded-full border border-white/10 overflow-hidden cursor-pointer bg-white/5 flex items-center justify-center">
-                  <input
-                    type="color"
-                    value={accentColor}
-                    onChange={(e) => setAccentColor(e.target.value)}
-                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                {/* Card Container Preview */}
+                <div className="my-4 flex justify-center items-center bg-slate-950/80 rounded-xl p-4 border border-slate-800/80">
+                  <RenderExecutiveCard
+                    styleId={style.id}
+                    data={data}
+                    flipped={previewFlipped}
+                    onFlip={() => setPreviewFlipped((f) => !f)}
                   />
-                  <div className="w-5 h-5 rounded-full border border-white/10 shadow-sm" style={{ backgroundColor: accentColor }} />
                 </div>
-                <div className="flex gap-1.5">
-                  {["#e1306c", "#0ea5e9", "#7c6ef5", "#10b981", "#ff7b00"].map((hex) => (
+
+                {/* Description & Action */}
+                <div className="text-left mt-2">
+                  <p className="text-[11px] text-slate-400 leading-relaxed mb-4">
+                    {style.description}
+                  </p>
+                  <div className="flex items-center gap-2">
                     <button
-                      key={hex}
-                      onClick={() => setAccentColor(hex)}
-                      className="w-5 h-5 rounded-full border border-black/25 flex items-center justify-center transition-all hover:scale-110"
-                      style={{ backgroundColor: hex }}
+                      onClick={() => {
+                        setSelectedStyleId(style.id);
+                        setViewMode("inspector");
+                      }}
+                      className="w-full flex items-center justify-center gap-1.5 py-2.5 rounded-xl bg-amber-500/10 hover:bg-amber-500 text-amber-300 hover:text-slate-950 text-xs font-bold border border-amber-500/30 transition-all"
                     >
-                      {accentColor.toLowerCase() === hex.toLowerCase() && <Check size={10} className="text-white" />}
+                      <span>Customize & Export</span>
+                      <ArrowRight size={13} />
                     </button>
-                  ))}
+                    <button
+                      onClick={() => setPreviewFlipped((f) => !f)}
+                      className="p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300"
+                      title="Flip Preview Card"
+                    >
+                      <RotateCw size={14} />
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          )}
-
-          {/* Quick Specifications */}
-          <div className="mt-4 pt-4 border-t border-white/5 flex flex-col gap-2 text-[10px] text-white/35 font-medium leading-relaxed">
-            <p className="flex justify-between"><span>Dimensions:</span> <span className="text-white/60">3.5 × 2.0 inches (CR80 ratio)</span></p>
-            <p className="flex justify-between"><span>Resolution:</span> <span className="text-white/60">300 DPI Vector scale ready</span></p>
-            <p className="flex justify-between"><span>RFID Chip Type:</span> <span className="text-white/60">NTAG213 / NTAG215 (NFC compatible)</span></p>
+            ))}
           </div>
-        </section>
+        </main>
+      )}
 
-      </main>
+      {/* INSPECTOR VIEW: DETAILED EDITING & CARD SHOWROOM */}
+      {viewMode === "inspector" && (
+        <main className="no-print max-w-7xl w-full mx-auto flex-grow grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          {/* Left Panel: Detailed Form Controls */}
+          <section className="lg:col-span-4 bg-slate-900/80 border border-slate-800 rounded-2xl p-5 text-left flex flex-col gap-4 backdrop-blur-xl">
+            <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+              <div className="flex items-center gap-2">
+                <Sliders size={16} className="text-amber-400" />
+                <h3 className="text-sm font-bold text-white">Manager Information</h3>
+              </div>
+              <button
+                onClick={() => setData(DEFAULT_VICTORY_DATA)}
+                className="text-[10px] text-amber-400 hover:underline flex items-center gap-1"
+              >
+                <RotateCw size={10} /> Reset
+              </button>
+            </div>
 
-      {/* Print Blueprint Page (Screen hidden, visible on print only) */}
-      <div className="print-only flex-col items-center justify-center gap-12 bg-white min-h-screen text-black">
-        <div>
-          <h2 className="text-center font-bold text-lg mb-1" style={{ color: "#111" }}>Social Card Print Blueprint</h2>
-          <p className="text-center text-xs text-gray-400 mb-6">Scale is exactly calibrated to 3.5 in × 2.0 in card templates.</p>
+            <div className="flex flex-col gap-3">
+              <div>
+                <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">
+                  Full Name
+                </label>
+                <input
+                  type="text"
+                  value={data.name}
+                  onChange={(e) => setData({ ...data, name: e.target.value })}
+                  className="w-full bg-slate-950 border border-slate-800 focus:border-amber-500 px-3 py-2 rounded-xl text-xs text-white outline-none"
+                />
+              </div>
+
+              <div>
+                <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">
+                  Designation / Role
+                </label>
+                <input
+                  type="text"
+                  value={data.title}
+                  onChange={(e) => setData({ ...data, title: e.target.value })}
+                  className="w-full bg-slate-950 border border-slate-800 focus:border-amber-500 px-3 py-2 rounded-xl text-xs text-white outline-none"
+                />
+              </div>
+
+              <div>
+                <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">
+                  Company Name
+                </label>
+                <input
+                  type="text"
+                  value={data.company}
+                  onChange={(e) => setData({ ...data, company: e.target.value })}
+                  className="w-full bg-slate-950 border border-slate-800 focus:border-amber-500 px-3 py-2 rounded-xl text-xs text-white outline-none"
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-2">
+                <div>
+                  <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">
+                    Phone Number
+                  </label>
+                  <input
+                    type="text"
+                    value={data.phone}
+                    onChange={(e) => setData({ ...data, phone: e.target.value })}
+                    className="w-full bg-slate-950 border border-slate-800 focus:border-amber-500 px-3 py-2 rounded-xl text-xs text-white outline-none font-mono"
+                  />
+                </div>
+                <div>
+                  <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">
+                    Email Address
+                  </label>
+                  <input
+                    type="text"
+                    value={data.email}
+                    onChange={(e) => setData({ ...data, email: e.target.value })}
+                    className="w-full bg-slate-950 border border-slate-800 focus:border-amber-500 px-3 py-2 rounded-xl text-xs text-white outline-none"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">
+                  Office / Hotel Address
+                </label>
+                <textarea
+                  rows={2}
+                  value={data.address}
+                  onChange={(e) => setData({ ...data, address: e.target.value })}
+                  className="w-full bg-slate-950 border border-slate-800 focus:border-amber-500 px-3 py-2 rounded-xl text-xs text-white outline-none resize-none"
+                />
+              </div>
+
+              <div>
+                <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">
+                  NFC / QR Link URL
+                </label>
+                <input
+                  type="text"
+                  value={data.qrLink}
+                  onChange={(e) => setData({ ...data, qrLink: e.target.value })}
+                  className="w-full bg-slate-950 border border-slate-800 focus:border-amber-500 px-3 py-2 rounded-xl text-xs text-amber-400 font-mono outline-none"
+                />
+              </div>
+            </div>
+          </section>
+
+          {/* Center Stage: Card Inspector Preview */}
+          <section className="lg:col-span-5 flex flex-col items-center justify-center gap-6">
+            <div className="w-full bg-slate-950/80 border border-slate-800 rounded-2xl p-8 flex flex-col items-center justify-center relative min-h-[320px]">
+              <span className="absolute top-3 left-4 text-[10px] uppercase tracking-widest text-slate-500 font-bold">
+                Live Interactive Stage · 3.5" × 2.0"
+              </span>
+
+              {/* Render Selected Card */}
+              <div className="py-6">
+                <RenderExecutiveCard
+                  styleId={selectedStyleId}
+                  data={data}
+                  flipped={previewFlipped}
+                  onFlip={() => setPreviewFlipped((f) => !f)}
+                />
+              </div>
+
+              <div className="flex items-center gap-3">
+                <button
+                  onClick={() => setPreviewFlipped((f) => !f)}
+                  className="flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-slate-200 transition-all"
+                >
+                  <RotateCw size={14} />
+                  <span>Flip Card (Front / Back)</span>
+                </button>
+              </div>
+            </div>
+
+            <div className="w-full bg-slate-900/60 border border-slate-800 rounded-2xl p-4 text-left">
+              <h4 className="text-xs font-bold text-amber-400 mb-1">{currentStyle.name} Specs</h4>
+              <p className="text-[11px] text-slate-400 leading-relaxed">{currentStyle.description}</p>
+            </div>
+          </section>
+
+          {/* Right Panel: Style Selector List */}
+          <section className="lg:col-span-3 bg-slate-900/80 border border-slate-800 rounded-2xl p-5 text-left flex flex-col gap-3 backdrop-blur-xl">
+            <h3 className="text-sm font-bold text-white border-b border-slate-800 pb-3">
+              Switch Design Concept
+            </h3>
+            <div className="flex flex-col gap-2">
+              {DESIGN_STYLES.map((s) => (
+                <button
+                  key={s.id}
+                  onClick={() => setSelectedStyleId(s.id)}
+                  className={`p-3 rounded-xl border text-left transition-all ${
+                    selectedStyleId === s.id
+                      ? "bg-amber-500/10 border-amber-500 text-amber-300"
+                      : "bg-slate-950 border-slate-800 text-slate-400 hover:text-slate-200"
+                  }`}
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-bold text-white">{s.name}</span>
+                    {selectedStyleId === s.id && <Check size={12} className="text-amber-400" />}
+                  </div>
+                  <span className="text-[9.5px] text-slate-400 block mt-0.5">{s.tagline}</span>
+                </button>
+              ))}
+            </div>
+          </section>
+        </main>
+      )}
+
+      {/* PRINT BLUEPRINT MODE (Visible only during printing or PDF export) */}
+      <div className="print-only flex-col items-center justify-center gap-8 bg-white min-h-screen text-slate-900">
+        <div className="text-center">
+          <h2 className="text-lg font-bold" style={{ fontFamily: "'Cinzel', serif" }}>
+            Victory Hotels — Business Card Print Blueprint
+          </h2>
+          <p className="text-xs text-slate-500 mt-1">
+            Calibrated for standard CR-80 card printing (3.5 in × 2.0 in)
+          </p>
         </div>
 
-        <div className="print-card-wrapper flex flex-row items-center justify-center gap-12">
-          {/* Card Front Unit */}
+        <div className="flex flex-row items-center justify-center gap-10">
           <div className="flex flex-col items-center gap-2">
-            <span className="print-title font-semibold text-xs text-gray-500 uppercase tracking-widest">Card Front Face</span>
-            <div className="card-unit overflow-hidden relative">
-              <ShowroomCard
-                name={name}
-                title={title}
-                company={company}
-                handle={handle}
-                sub={sub}
-                qrLink={qrLink}
-                tagline={tagline}
-                variant={variant}
-                accentColor={accentColor}
-                metalFinish={metalFinish}
-                glassBlobStyle={glassBlobStyle}
-                platform={platform}
-                flipped={false}
-                setFlipped={() => { }}
-              />
+            <span className="text-xs font-bold text-slate-600 uppercase tracking-widest">
+              Card Front
+            </span>
+            <div className="card-unit border border-slate-300 rounded-none overflow-hidden">
+              <RenderExecutiveCard styleId={selectedStyleId} data={data} flipped={false} />
             </div>
           </div>
 
-          {/* Card Back Unit */}
           <div className="flex flex-col items-center gap-2">
-            <span className="print-title font-semibold text-xs text-gray-500 uppercase tracking-widest">Card Back Face</span>
-            <div className="card-unit overflow-hidden relative">
-              <ShowroomCard
-                name={name}
-                title={title}
-                company={company}
-                handle={handle}
-                sub={sub}
-                qrLink={qrLink}
-                tagline={tagline}
-                variant={variant}
-                accentColor={accentColor}
-                metalFinish={metalFinish}
-                glassBlobStyle={glassBlobStyle}
-                platform={platform}
-                flipped={true}
-                setFlipped={() => { }}
-              />
+            <span className="text-xs font-bold text-slate-600 uppercase tracking-widest">
+              Card Back
+            </span>
+            <div className="card-unit border border-slate-300 rounded-none overflow-hidden">
+              <RenderExecutiveCard styleId={selectedStyleId} data={data} flipped={true} />
             </div>
           </div>
         </div>
       </div>
 
-      {/* Footer (No print) */}
-      <footer className="no-print mt-12 text-center border-t border-white/5 pt-6 text-[10px] text-white/20 select-none">
-        <p>© 2026 NFC Social Studio · All vectors and styles dynamically compiled in browser</p>
+      {/* Footer (No Print) */}
+      <footer className="no-print mt-8 border-t border-slate-800 pt-4 text-center text-[10px] text-slate-500">
+        © 2026 Victory Hotels · Executive NFC Card Studio & Print Engine
       </footer>
     </div>
   );
