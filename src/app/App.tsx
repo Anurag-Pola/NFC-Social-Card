@@ -10,95 +10,87 @@ import {
   Check,
   Sliders,
   LayoutGrid,
-  ArrowRight,
-  ShieldCheck
+  ArrowRight
 } from "lucide-react";
+import victoryLogo from "../../assests/logo.svg";
 
-// ── Victory Hotels Vector Logo Component ─────────────────────────────────────
-// Faithfully reproduces the star + winged V crest + circular ring from the user's card
+// ── Victory Hotels Brand Logo Component ──────────────────────────────────────
+// Renders the official crest from assests/logo.svg (star + winged V + ring).
+// The source file draws the crest inside a 1500x1500 canvas with wide empty
+// margins, so we crop to the mark's tight bounds below — otherwise it renders
+// at roughly half size and sits off-centre. Re-measure these if logo.svg is
+// re-exported.
+const CREST_BOX = { x: 388, y: 357, w: 749, h: 686, canvas: 1500 };
+
+// The artwork's own gold peaks near white, which has almost no luminance
+// contrast against a cream card — the mark dissolves and only its edges read,
+// which looks like stray outlines. "gold-deep" re-fills the crest with a
+// gradient kept well below the paper tone, so use it on light backgrounds.
+const CREST_FILL = {
+  "gold-deep":
+    "linear-gradient(135deg, #E0B23F 0%, #B4820F 34%, #8A5E0C 62%, #C9992A 88%, #A2740F 100%)",
+  silver: "linear-gradient(135deg, #FFFFFF 0%, #B8C2CC 50%, #E2E8F0 100%)",
+  dark: "#1f2937",
+  white: "#ffffff"
+} as const;
+
 export const VictoryHotelsLogo = ({
   size = 48,
   variant = "gold",
   customColor
 }: {
   size?: number;
-  variant?: "gold" | "silver" | "dark" | "white" | "custom";
+  variant?: "gold" | "gold-deep" | "silver" | "dark" | "white" | "custom";
   customColor?: string;
 }) => {
-  const gradId = `victory-grad-${Math.random().toString(36).substr(2, 9)}`;
+  // `size` is the crest width; height follows the mark's natural aspect ratio.
+  const k = size / CREST_BOX.w;
+  const artwork = {
+    position: "absolute" as const,
+    left: -CREST_BOX.x * k,
+    top: -CREST_BOX.y * k,
+    width: CREST_BOX.canvas * k,
+    height: CREST_BOX.canvas * k,
+    maxWidth: "none"
+  };
 
-  let fillStyle = `url(#${gradId})`;
-  if (variant === "dark") fillStyle = "#1f2937";
-  if (variant === "white") fillStyle = "#ffffff";
-  if (variant === "custom" && customColor) fillStyle = customColor;
+  // Gold keeps the artwork's own metallic gradient; the other variants recolour
+  // the mark by using its alpha as a CSS mask.
+  const fill =
+    variant === "custom"
+      ? customColor ?? CREST_FILL.dark
+      : CREST_FILL[variant as Exclude<typeof variant, "gold" | "custom">];
 
   return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 100 105"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className="drop-shadow-sm"
+    <span
+      style={{
+        display: "inline-block",
+        position: "relative",
+        overflow: "hidden",
+        width: size,
+        height: CREST_BOX.h * k,
+        flexShrink: 0
+      }}
     >
-      <defs>
-        {variant === "gold" && (
-          <linearGradient id={gradId} x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#FFE89C" />
-            <stop offset="35%" stopColor="#D4AF37" />
-            <stop offset="70%" stopColor="#AA7C11" />
-            <stop offset="100%" stopColor="#F5D061" />
-          </linearGradient>
-        )}
-        {variant === "silver" && (
-          <linearGradient id={gradId} x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#FFFFFF" />
-            <stop offset="50%" stopColor="#B8C2CC" />
-            <stop offset="100%" stopColor="#E2E8F0" />
-          </linearGradient>
-        )}
-      </defs>
-
-      {/* Top 5-Point Star */}
-      <polygon
-        points="50,2 52.4,9.5 60,9.5 53.8,14 56.2,21.5 50,17 43.8,21.5 46.2,14 40,9.5 47.6,9.5"
-        fill={fillStyle}
-      />
-
-      {/* Bottom Golden Ring Base */}
-      <circle
-        cx="50"
-        cy="72"
-        r="18"
-        stroke={fillStyle}
-        strokeWidth="5"
-        fill="none"
-      />
-
-      {/* LEFT WING - Outer Feather */}
-      <path
-        d="M 50,72 C 45,62 30,48 34,26 C 39,38 48,56 50,72 Z"
-        fill={fillStyle}
-      />
-
-      {/* LEFT WING - Inner Feather */}
-      <path
-        d="M 50,72 C 46,62 36,50 41,32 C 44,42 48,58 50,72 Z"
-        fill={fillStyle}
-      />
-
-      {/* RIGHT WING - Outer Feather */}
-      <path
-        d="M 50,72 C 55,62 70,48 66,26 C 61,38 52,56 50,72 Z"
-        fill={fillStyle}
-      />
-
-      {/* RIGHT WING - Inner Feather */}
-      <path
-        d="M 50,72 C 54,62 64,50 59,32 C 56,42 52,58 50,72 Z"
-        fill={fillStyle}
-      />
-    </svg>
+      {variant === "gold" ? (
+        <img src={victoryLogo} alt="Victory Hotels & Resorts" style={artwork} />
+      ) : (
+        <span
+          role="img"
+          aria-label="Victory Hotels & Resorts"
+          style={{
+            ...artwork,
+            background: fill,
+            WebkitMaskImage: `url(${victoryLogo})`,
+            maskImage: `url(${victoryLogo})`,
+            WebkitMaskSize: "100% 100%",
+            maskSize: "100% 100%",
+            WebkitMaskRepeat: "no-repeat",
+            maskRepeat: "no-repeat"
+          }}
+        />
+      )}
+    </span>
   );
 };
 
@@ -255,6 +247,12 @@ export function RenderExecutiveCard({ styleId, data, flipped, onFlip, scale = 1 
     transformOrigin: "center center"
   };
 
+  // Stacked brand lockup used on the Royal Obsidian back: the first word sits
+  // large in serif caps, any remaining words become the tracked gold sub-line
+  // ("Victory Hotels" → VICTORY / HOTELS).
+  const [brandLead, ...brandRest] = data.company.trim().split(/\s+/);
+  const brandSub = brandRest.join(" · ");
+
   // 1. ROYAL GOLD & OBSIDIAN (24K Gold Alloy)
   if (styleId === "royal-gold") {
     return (
@@ -284,11 +282,13 @@ export function RenderExecutiveCard({ styleId, data, flipped, onFlip, scale = 1 
             <NFCChipTouchpoint color="#F5D061" textColor="rgba(245,208,97,0.7)" glowColor="rgba(212,175,55,0.12)" />
 
             {/* Header: Name & Title (Left) + Logo (Center-Right) */}
+            {/* Brand mark, pinned to the top-right corner */}
+            <div className="absolute top-3 right-3 z-20">
+              <VictoryHotelsLogo size={28} variant="gold" />
+            </div>
+
             <div className="flex justify-between items-start z-10 max-w-[245px]">
               <div className="flex flex-col text-left">
-                <span className="text-[7.5px] uppercase tracking-[0.25em] font-semibold text-[#D4AF37]/80">
-                  {data.company}
-                </span>
                 <h2
                   className="text-base font-bold tracking-tight text-transparent bg-clip-text leading-tight"
                   style={{
@@ -302,9 +302,6 @@ export function RenderExecutiveCard({ styleId, data, flipped, onFlip, scale = 1 
                 <p className="text-[9.5px] font-medium text-white/70 tracking-wide mt-0.5">
                   {data.title}
                 </p>
-              </div>
-              <div className="flex flex-col items-center">
-                <VictoryHotelsLogo size={34} variant="gold" />
               </div>
             </div>
 
@@ -352,26 +349,42 @@ export function RenderExecutiveCard({ styleId, data, flipped, onFlip, scale = 1 
               background: "linear-gradient(135deg, #08080a 0%, #16151c 100%)"
             }}
           >
-            <div className="flex flex-col text-left justify-between h-full py-1 z-10 max-w-[160px]">
-              <div className="flex items-center gap-2">
-                <VictoryHotelsLogo size={28} variant="gold" />
+            {/* Fine woven texture behind the lockup */}
+            <div
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                backgroundImage:
+                  "radial-gradient(rgba(255,255,255,0.055) 0.5px, transparent 0.5px)",
+                backgroundSize: "3px 3px"
+              }}
+            />
+
+            {/* Company side: Victory Hotels only — stacked crest over wordmark,
+                vertically centred on the left. No personal details. */}
+            <div className="flex flex-col items-center justify-center h-full z-10 w-[178px]">
+              <VictoryHotelsLogo size={46} variant="gold" />
+
+              <span
+                className="text-[19px] leading-none text-[#F7F3E8] mt-2 whitespace-nowrap"
+                style={{
+                  fontFamily: "'Cinzel', serif",
+                  letterSpacing: "0.3em",
+                  marginRight: "-0.3em"
+                }}
+              >
+                {brandLead.toUpperCase()}
+              </span>
+
+              {brandSub && (
                 <span
-                  className="text-xs font-bold tracking-wider text-[#D4AF37]"
-                  style={{ fontFamily: "'Cinzel', serif" }}
+                  className="text-[6.5px] font-semibold text-[#D4AF37] mt-1.5 whitespace-nowrap"
+                  style={{ letterSpacing: "0.42em", marginRight: "-0.42em" }}
                 >
-                  VICTORY
+                  {brandSub.toUpperCase()}
                 </span>
-              </div>
-              <div>
-                <p className="text-[8px] uppercase tracking-widest text-white/40">
-                  Digital Card Portal
-                </p>
-                <p className="text-xs font-bold text-white mt-0.5">{data.name}</p>
-                <p className="text-[8.5px] text-[#D4AF37] mt-0.5">{data.title}</p>
-              </div>
-              <p className="text-[7.5px] text-white/40 flex items-center gap-1">
-                <ShieldCheck size={10} className="text-[#D4AF37]" /> Verified Executive
-              </p>
+              )}
+
+              <span className="text-[7.5px] text-white/45 mt-3">{data.website}</span>
             </div>
 
             {/* QR Code Frame */}
@@ -437,7 +450,7 @@ export function RenderExecutiveCard({ styleId, data, flipped, onFlip, scale = 1 
 
             {/* Center Logo & Company Title */}
             <div className="flex flex-col items-center justify-center my-auto z-10 max-w-[245px]">
-              <VictoryHotelsLogo size={38} variant="gold" />
+              <VictoryHotelsLogo size={38} variant="gold-deep" />
               <h3
                 className="text-xs font-extrabold tracking-wider text-stone-900 mt-1"
                 style={{ fontFamily: "'Cinzel', serif" }}
@@ -463,7 +476,7 @@ export function RenderExecutiveCard({ styleId, data, flipped, onFlip, scale = 1 
           >
             <div className="flex flex-col text-left justify-between h-full py-1 z-10 max-w-[170px]">
               <div>
-                <VictoryHotelsLogo size={32} variant="gold" />
+                <VictoryHotelsLogo size={32} variant="gold-deep" />
                 <h4 className="text-xs font-bold text-stone-900 mt-1">{data.company}</h4>
                 <p className="text-[8.5px] text-amber-800 font-medium">{data.tagline}</p>
               </div>
@@ -586,7 +599,7 @@ export function RenderExecutiveCard({ styleId, data, flipped, onFlip, scale = 1 
                 </h2>
                 <p className="text-[9.5px] font-semibold text-amber-900">{data.title}</p>
               </div>
-              <VictoryHotelsLogo size={32} variant="gold" />
+              <VictoryHotelsLogo size={32} variant="gold-deep" />
             </div>
 
             <div className="flex justify-between items-end z-10 text-left pt-1 max-w-[245px]">
@@ -606,7 +619,7 @@ export function RenderExecutiveCard({ styleId, data, flipped, onFlip, scale = 1 
             onClick={onFlip}
           >
             <div className="flex flex-col text-left justify-between h-full py-1">
-              <VictoryHotelsLogo size={30} variant="gold" />
+              <VictoryHotelsLogo size={30} variant="gold-deep" />
               <div>
                 <p className="text-[8px] uppercase tracking-wider text-amber-900 font-semibold">
                   Victory Hotels Executive
@@ -690,7 +703,7 @@ export function RenderExecutiveCard({ styleId, data, flipped, onFlip, scale = 1 
 export default function App() {
   const [data, setData] = useState<ManagerCardData>(DEFAULT_VICTORY_DATA);
   const [selectedStyleId, setSelectedStyleId] = useState<string>("royal-gold");
-  const [previewFlipped, setPreviewFlipped] = useState<boolean>(false);
+  const [previewFlipped, setPreviewFlipped] = useState<boolean>(true);
   const [viewMode, setViewMode] = useState<"inspector" | "gallery">("gallery");
 
   const currentStyle =
