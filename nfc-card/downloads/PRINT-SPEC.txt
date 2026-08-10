@@ -1,0 +1,59 @@
+VICTORY HOTELS — NFC BUSINESS CARD
+Print specification
+
+CARD
+  Trim          85 x 55 mm (standard business card, ISO 7810 ID-1)
+  Bleed         3 mm all round  ->  supplied page is 91 x 61 mm
+  Safe margin   4 mm inside trim (see NOTES)
+  Resolution    600 dpi, flattened RGB
+  Corners       square as supplied; round to 3 mm radius at finishing if wanted
+  Orientation   landscape, front and back supplied as separate pages
+
+FILES
+  victory-card-1a-midnight-obsidian.pdf   Option 1A - p1 front, p2 back
+  victory-card-1b-marble-editorial.pdf    Option 1B - p1 front, p2 back
+  victory-nfc-cards-all.pdf               all four faces, one file
+  png/*-bleed.png                         2150 x 1441 px, includes bleed - USE THIS TO PRINT
+  png/*-trim.png                          2008 x 1299 px, cut size - for on-screen preview only
+
+  Print from the PDFs or the *-bleed.png files. The PDFs are flattened
+  raster at 600 dpi, so no fonts need to be installed to output them.
+
+LAYOUT
+  Front         Vittal Jadhav's details, NFC tap mark top-right
+  Back          Victory Hotels brand face, with the QR
+
+STOCK & FINISH (as designed)
+  1A  soft-touch laminated black, 400 gsm; gold foil stamp; spot UV on back
+  1B  uncoated warm ivory, 380 gsm; gilded top edge; gold edge paint
+
+NFC
+  Chip          NTAG-213, 144 byte, re-writable
+  Placement     embed centred behind the tap mark, top-right of the front
+  Keep the antenna clear of any foil stamping - metal detunes the coil.
+  Payload       smart URL -> hosted landing card (vCard, WhatsApp, booking)
+
+QR
+  Encodes the same smart URL as the chip (assets/build-qr.py holds the URL).
+  Printed size  12.1 mm square, on a light panel on the back
+  Module        ~0.42 mm - at the practical floor, do not scale down
+  Print the code as flat process black. No foil, no spot UV, no metallic
+  ink on the modules or the light panel around them: both kill the contrast
+  a scanner needs. The panel's pad is the quiet zone - keep it empty.
+
+NOTES / DECISIONS FOR YOU
+  1. Colour is RGB. If your printer wants CMYK, ask them to convert to their
+     own profile - do not convert twice. The golds sit around #b48a3d-#e6c67a
+     and will shift slightly in CMYK; a metallic gold foil (Pantone 871/872)
+     will match the intent far better than 4-colour process.
+  2. Safe-margin encroachments on Option 1A, all deliberate edge detailing:
+       gold hairline frame    2.12 mm from trim
+       corner ornaments       3.04 mm from trim
+       "EST · 2021"           2.12 mm from trim
+     These are inside the usual 4 mm safe zone. They will still print, but a
+     cut drifting +/-0.5 mm will make the frame look uneven side to side.
+     Either accept it, ask for tighter guillotine tolerance, or have the
+     inset moved out to 4 mm. Option 1B has no encroachments.
+  3. The logo is supplied raster (600 dpi output is comfortably above the
+     300 dpi standard). For foil stamping or very large reproduction, a
+     vector version of the emblem would be needed.

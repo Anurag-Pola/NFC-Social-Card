@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { QRCodeSVG } from "qrcode.react";
+import { toPng } from "html-to-image";
 import {
   Phone,
   Mail,
@@ -10,7 +11,9 @@ import {
   Check,
   Sliders,
   LayoutGrid,
-  ArrowRight
+  ArrowRight,
+  Download,
+  Loader2
 } from "lucide-react";
 import victoryLogo from "../../assests/logo.svg";
 
@@ -703,7 +706,7 @@ export function RenderExecutiveCard({ styleId, data, flipped, onFlip, scale = 1 
 export default function App() {
   const [data, setData] = useState<ManagerCardData>(DEFAULT_VICTORY_DATA);
   const [selectedStyleId, setSelectedStyleId] = useState<string>("royal-gold");
-  const [previewFlipped, setPreviewFlipped] = useState<boolean>(true);
+  const [previewFlipped, setPreviewFlipped] = useState<boolean>(false);
   const [viewMode, setViewMode] = useState<"inspector" | "gallery">("gallery");
 
   const currentStyle =
@@ -711,6 +714,34 @@ export default function App() {
 
   const handlePrint = () => {
     window.print();
+  };
+
+  // PNG export. Capturing the on-screen preview would only ever catch whichever
+  // side happens to be flipped up, so each design is also rendered into an
+  // off-screen stage holding front and back together; that pair is what we
+  // rasterise, giving one file with both sides.
+  const exportRefs = useRef<Record<string, HTMLDivElement | null>>({});
+  const [downloadingId, setDownloadingId] = useState<string | null>(null);
+
+  const handleDownload = async (styleId: string) => {
+    const node = exportRefs.current[styleId];
+    if (!node || downloadingId) return;
+
+    setDownloadingId(styleId);
+    try {
+      const dataUrl = await toPng(node, { pixelRatio: 4, cacheBust: true });
+      const slug = (value: string) =>
+        value.trim().toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+
+      const link = document.createElement("a");
+      link.href = dataUrl;
+      link.download = `${slug(data.name)}-${styleId}-card.png`;
+      link.click();
+    } catch (error) {
+      console.error("Card PNG export failed", error);
+    } finally {
+      setDownloadingId(null);
+    }
   };
 
   return (
@@ -799,6 +830,19 @@ export default function App() {
           >
             <Sliders size={14} />
             <span>Custom Inspector</span>
+          </button>
+          <button
+            onClick={() => handleDownload(selectedStyleId)}
+            disabled={downloadingId !== null}
+            title={`Download ${currentStyle.name} as PNG (front & back)`}
+            className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:text-white text-xs font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {downloadingId ? (
+              <Loader2 size={14} className="animate-spin" />
+            ) : (
+              <Download size={14} />
+            )}
+            <span>{downloadingId ? "Preparing…" : "Download PNG"}</span>
           </button>
           <button
             onClick={handlePrint}
@@ -900,6 +944,18 @@ export default function App() {
                     >
                       <span>Customize & Export</span>
                       <ArrowRight size={13} />
+                    </button>
+                    <button
+                      onClick={() => handleDownload(style.id)}
+                      disabled={downloadingId !== null}
+                      className="p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                      title="Download PNG (front & back)"
+                    >
+                      {downloadingId === style.id ? (
+                        <Loader2 size={14} className="animate-spin" />
+                      ) : (
+                        <Download size={14} />
+                      )}
                     </button>
                     <button
                       onClick={() => setPreviewFlipped((f) => !f)}
@@ -1083,6 +1139,27 @@ export default function App() {
           </section>
         </main>
       )}
+
+      {/* PNG EXPORT STAGE — off-screen, never visible, never printed.
+          Rendered (not display:none) so html-to-image can rasterise it. */}
+      <div
+        aria-hidden
+        className="no-print fixed top-0 left-0 pointer-events-none opacity-0"
+        style={{ transform: "translateX(-200vw)", zIndex: -1 }}
+      >
+        {DESIGN_STYLES.map((style) => (
+          <div
+            key={style.id}
+            ref={(el) => {
+              exportRefs.current[style.id] = el;
+            }}
+            className="flex flex-row items-center gap-6 p-6"
+          >
+            <RenderExecutiveCard styleId={style.id} data={data} flipped={false} />
+            <RenderExecutiveCard styleId={style.id} data={data} flipped={true} />
+          </div>
+        ))}
+      </div>
 
       {/* PRINT BLUEPRINT MODE (Visible only during printing or PDF export) */}
       <div className="print-only flex-col items-center justify-center gap-8 bg-white min-h-screen text-slate-900">
