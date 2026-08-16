@@ -22,4 +22,5 @@ dist-ssr/
 *.ntvsca*
 *.njsproj
 *.sln
-*.sw?
+# Build work directories
+nfc-card/print/.work*/

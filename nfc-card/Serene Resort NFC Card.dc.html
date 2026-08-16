@@ -19,10 +19,6 @@
   .sr-mark { display: block; width: auto; }
   /* QR: same smart URL as the NFC payload — see assets/serene/build-serene-qr.py */
   .sr-qr { display: block; }
-  @keyframes pulse-ring {
-    0% { transform: scale(0.8); opacity: 0.9; }
-    100% { transform: scale(2.4); opacity: 0; }
-  }
   @keyframes float-card {
     0%, 100% { transform: translateY(0) rotate(-2deg); }
     50% { transform: translateY(-6px) rotate(-2deg); }
@@ -46,17 +42,17 @@
 
   <div style="display: flex; flex-wrap: wrap; gap: 56px; align-items: flex-start;">
 
-    <!-- ============= OPTION 2A · MIDNIGHT OBSIDIAN ============= -->
+    <!-- ============= OPTION 2A · WHITE & GOLD ============= -->
     <div id="2a" style="flex: 1 1 560px; min-width: 520px; display: flex; flex-direction: column; gap: 20px;">
       <div style="display: flex; align-items: center; gap: 12px;">
-        <span style="background: #17140f; color: #d9b56a; font-family: 'JetBrains Mono', monospace; font-size: 12px; padding: 4px 10px; border-radius: 2px; letter-spacing: 0.08em;">2A</span>
-        <h2 style="font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 26px; margin: 0;">Midnight Obsidian</h2>
-        <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #7a6f5a; letter-spacing: 0.06em;">soft-touch black · brushed gold foil</span>
+        <span style="background: #ffffff; color: #17140f; border: 1px solid #d4cdbf; font-family: 'JetBrains Mono', monospace; font-size: 12px; padding: 4px 10px; border-radius: 2px; letter-spacing: 0.08em;">2A</span>
+        <h2 style="font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 26px; margin: 0;">White &amp; Gold Classic</h2>
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #7a6f5a; letter-spacing: 0.06em;">premium white card · brushed gold foil</span>
       </div>
 
       <!-- FRONT -->
-      <div style="width: 560px; height: 360px; border-radius: 6px; position: relative; overflow: hidden; background: linear-gradient(180deg, #14110c 0%, #0a0906 100%); box-shadow: 0 30px 60px -20px rgba(10,9,6,0.5); color: #f2ead8; padding: 32px 40px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between;">
-        <div style="position: absolute; inset: 14px; border: 1px solid rgba(217,181,106,0.18); border-radius: 2px; pointer-events: none;"></div>
+      <div style="width: 560px; height: 360px; border-radius: 6px; position: relative; overflow: hidden; background: #ffffff; box-shadow: 0 30px 60px -20px rgba(10,9,6,0.18), 0 0 0 1px rgba(23,20,15,0.08) inset; color: #17140f; padding: 32px 40px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between;">
+        <div style="position: absolute; inset: 14px; border: 1px solid rgba(168,130,58,0.35); border-radius: 2px; pointer-events: none;"></div>
 
         <!-- top row: the person, and the tap target top-right -->
         <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 24px;">
@@ -66,93 +62,86 @@
                  the front can spare lands under 0.5mm cap height and would fill in
                  on press. The back carries the name in full. -->
             <img class="sr-mark" src="./assets/serene/serene-emblem.svg" alt="Serene Resort &amp; Convention" style="height: 30px; margin-bottom: 14px;">
-            <div style="font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.24em; color: #d9b56a; text-transform: uppercase;">Corporate General Manager</div>
-            <div style="font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 34px; margin-top: 6px; line-height: 1;">Vittal Jadhav</div>
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.24em; color: #a8823a; text-transform: uppercase;">Corporate General Manager</div>
+            <div style="font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 34px; margin-top: 6px; line-height: 1; color: #17140f;">Vittal Jadhav</div>
           </div>
 
           <!-- NFC tap zone · chip sits centred behind this mark -->
           <div style="display: flex; flex-direction: column; align-items: center; gap: 6px; flex-shrink: 0;">
-            <div style="position: relative; width: 34px; height: 34px; display: grid; place-items: center;">
-              <div style="position: absolute; inset: 0; border-radius: 50%; border: 1.5px solid #d9b56a; opacity: 0.4; animation: pulse-ring 2.2s ease-out infinite;"></div>
-              <div style="position: absolute; inset: 0; border-radius: 50%; border: 1.5px solid #d9b56a; opacity: 0.4; animation: pulse-ring 2.2s ease-out infinite; animation-delay: 1.1s;"></div>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 8 C 8 8, 8 16, 4 16" stroke="#d9b56a" stroke-width="1.8" stroke-linecap="round"/><path d="M9 5 C 17 5, 17 19, 9 19" stroke="#d9b56a" stroke-width="1.8" stroke-linecap="round"/><path d="M14 2 C 24 2, 24 22, 14 22" stroke="#d9b56a" stroke-width="1.8" stroke-linecap="round"/></svg>
+            <div style="position: relative; width: 34px; height: 34px; display: grid; place-items: center; border-radius: 50%; border: 1.5px solid rgba(168,130,58,0.4);">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 8 C 8 8, 8 16, 4 16" stroke="#a8823a" stroke-width="1.8" stroke-linecap="round"/><path d="M9 5 C 17 5, 17 19, 9 19" stroke="#a8823a" stroke-width="1.8" stroke-linecap="round"/><path d="M14 2 C 24 2, 24 22, 14 22" stroke="#a8823a" stroke-width="1.8" stroke-linecap="round"/></svg>
             </div>
-            <div style="font-family: 'JetBrains Mono', monospace; font-size: 8px; letter-spacing: 0.22em; color: #d9b56a; text-transform: uppercase;">Tap</div>
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 8px; letter-spacing: 0.22em; color: #a8823a; text-transform: uppercase;">Tap</div>
           </div>
         </div>
 
         <!-- divider with dot -->
         <div style="display: flex; align-items: center; gap: 12px;">
-          <div style="flex: 1; height: 1px; background: linear-gradient(90deg, transparent, rgba(217,181,106,0.5), transparent);"></div>
-          <div style="width: 5px; height: 5px; background: #d9b56a; transform: rotate(45deg);"></div>
-          <div style="flex: 1; height: 1px; background: linear-gradient(90deg, transparent, rgba(217,181,106,0.5), transparent);"></div>
+          <div style="flex: 1; height: 1px; background: linear-gradient(90deg, transparent, rgba(168,130,58,0.45), transparent);"></div>
+          <div style="width: 5px; height: 5px; background: #a8823a; transform: rotate(45deg);"></div>
+          <div style="flex: 1; height: 1px; background: linear-gradient(90deg, transparent, rgba(168,130,58,0.45), transparent);"></div>
         </div>
 
         <!-- info grid -->
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 22px 32px;">
           <div>
-            <div style="font-family: 'JetBrains Mono', monospace; font-size: 8px; letter-spacing: 0.24em; color: #d9b56a; text-transform: uppercase; margin-bottom: 4px;">Mobile</div>
-            <div style="font-family: 'Inter', sans-serif; font-weight: 400; font-size: 14px; letter-spacing: 0.02em;">+91 98495 45958</div>
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 8px; letter-spacing: 0.24em; color: #a8823a; text-transform: uppercase; margin-bottom: 4px;">Mobile</div>
+            <div style="font-family: 'Inter', sans-serif; font-weight: 400; font-size: 14px; letter-spacing: 0.02em; color: #17140f;">+91 98495 45958</div>
           </div>
           <div>
-            <div style="font-family: 'JetBrains Mono', monospace; font-size: 8px; letter-spacing: 0.24em; color: #d9b56a; text-transform: uppercase; margin-bottom: 4px;">Email</div>
-            <div style="font-family: 'Inter', sans-serif; font-weight: 400; font-size: 14px;">reservations@sereneresort.in</div>
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 8px; letter-spacing: 0.24em; color: #a8823a; text-transform: uppercase; margin-bottom: 4px;">Email</div>
+            <div style="font-family: 'Inter', sans-serif; font-weight: 400; font-size: 14px; color: #17140f;">reservations@sereneresort.in</div>
           </div>
           <div>
-            <div style="font-family: 'JetBrains Mono', monospace; font-size: 8px; letter-spacing: 0.24em; color: #d9b56a; text-transform: uppercase; margin-bottom: 4px;">Resort</div>
-            <!-- Same weight and full ivory as the phone and email beside it; only
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 8px; letter-spacing: 0.24em; color: #a8823a; text-transform: uppercase; margin-bottom: 4px;">Resort</div>
+            <!-- Same weight and full tone as the phone and email beside it; only
                  the size steps down, because the address needs three lines. -->
-            <div style="font-family: 'Inter', sans-serif; font-weight: 400; font-size: 12px; line-height: 1.5;">Adjacent to ORR Exit 16,<br>Pedda Shapur Village,<br>Shamshabad, Hyderabad 509325</div>
+            <div style="font-family: 'Inter', sans-serif; font-weight: 400; font-size: 12px; line-height: 1.5; color: #17140f;">Adjacent to ORR Exit 16,<br>Pedda Shapur Village,<br>Shamshabad, Hyderabad 509325</div>
           </div>
           <div>
-            <div style="font-family: 'JetBrains Mono', monospace; font-size: 8px; letter-spacing: 0.24em; color: #d9b56a; text-transform: uppercase; margin-bottom: 4px;">Web</div>
-            <div style="font-family: 'Inter', sans-serif; font-weight: 400; font-size: 14px;">sereneresort.in</div>
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 8px; letter-spacing: 0.24em; color: #a8823a; text-transform: uppercase; margin-bottom: 4px;">Web</div>
+            <div style="font-family: 'Inter', sans-serif; font-weight: 400; font-size: 14px; color: #17140f;">sereneresort.in</div>
           </div>
         </div>
       </div>
 
       <!-- BACK -->
-      <div style="width: 560px; height: 360px; border-radius: 6px; position: relative; overflow: hidden; background: radial-gradient(120% 100% at 100% 0%, #2a251c 0%, #14110c 55%, #0a0906 100%); box-shadow: 0 30px 60px -20px rgba(10,9,6,0.5), 0 2px 0 rgba(255,255,255,0.04) inset; color: #f2ead8;">
+      <div style="width: 560px; height: 360px; border-radius: 6px; position: relative; overflow: hidden; background: #ffffff; box-shadow: 0 30px 60px -20px rgba(10,9,6,0.18), 0 0 0 1px rgba(23,20,15,0.08) inset; color: #17140f;">
         <!-- micro texture -->
-        <div style="position: absolute; inset: 0; background-image: radial-gradient(rgba(255,255,255,0.03) 1px, transparent 1px); background-size: 3px 3px; opacity: 0.5;"></div>
+        <div style="position: absolute; inset: 0; background-image: radial-gradient(rgba(23,20,15,0.03) 1px, transparent 1px); background-size: 3px 3px; opacity: 0.5;"></div>
         <!-- gold hairline frame -->
-        <div style="position: absolute; inset: 14px; border: 1px solid rgba(217,181,106,0.28); border-radius: 2px; pointer-events: none;"></div>
+        <div style="position: absolute; inset: 14px; border: 1px solid rgba(168,130,58,0.35); border-radius: 2px; pointer-events: none;"></div>
         <!-- gold corner ornaments -->
-        <div style="position: absolute; top: 20px; left: 20px; width: 22px; height: 22px; border-top: 1.5px solid #d9b56a; border-left: 1.5px solid #d9b56a;"></div>
-        <div style="position: absolute; bottom: 20px; right: 20px; width: 22px; height: 22px; border-bottom: 1.5px solid #d9b56a; border-right: 1.5px solid #d9b56a;"></div>
+        <div style="position: absolute; top: 20px; left: 20px; width: 22px; height: 22px; border-top: 1.5px solid #a8823a; border-left: 1.5px solid #a8823a;"></div>
+        <div style="position: absolute; bottom: 20px; right: 20px; width: 22px; height: 22px; border-bottom: 1.5px solid #a8823a; border-right: 1.5px solid #a8823a;"></div>
 
         <!-- Brand mark, centred in the left field; QR takes the right -->
         <div style="position: absolute; left: 0; top: 0; bottom: 0; width: 404px; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 16px;">
           <img class="sr-mark" src="./assets/serene/serene-emblem.svg" alt="Serene Resort &amp; Convention" style="height: 78px;">
           <div style="text-align: center;">
-            <div style="font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 30px; letter-spacing: 0.32em; padding-left: 0.32em; color: #f2ead8;">SERENE</div>
-            <div style="font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.42em; color: #d9b56a; margin-top: 6px;">RESORT · CONVENTION</div>
+            <div style="font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 30px; letter-spacing: 0.32em; padding-left: 0.32em; color: #17140f;">SERENE</div>
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.42em; color: #a8823a; margin-top: 6px;">RESORT · CONVENTION</div>
           </div>
         </div>
 
-        <!-- QR panel · the light pad is the code's quiet zone, keep it clear -->
+        <!-- QR panel · quiet zone frame -->
         <div style="position: absolute; right: 36px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; align-items: center; gap: 9px;">
-          <div style="background: #f5efe3; border-radius: 8px; padding: 11px; box-shadow: 0 0 0 1px rgba(217,181,106,0.35);">
+          <div style="background: #ffffff; border-radius: 8px; padding: 11px; box-shadow: 0 0 0 1px rgba(168,130,58,0.35), 0 2px 8px rgba(0,0,0,0.06);">
             <img class="sr-qr" src="./assets/serene/serene-qr.svg" alt="Scan to open the Serene Resort card" style="width: 80px; height: 80px;">
           </div>
-          <div style="font-family: 'JetBrains Mono', monospace; font-size: 7.5px; letter-spacing: 0.18em; color: rgba(217,181,106,0.85); text-transform: uppercase;">Scan to save contact</div>
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 7.5px; letter-spacing: 0.18em; color: #7a6f5a; text-transform: uppercase;">Scan to save contact</div>
         </div>
 
         <!-- bottom rule · centred under the mark, not the card -->
-        <div style="position: absolute; bottom: 34px; left: 202px; transform: translateX(-50%); font-family: 'JetBrains Mono', monospace; font-size: 8px; letter-spacing: 0.36em; color: rgba(217,181,106,0.7); white-space: nowrap;">— TRANQUIL · HEARTFELT · PURE —</div>
+        <div style="position: absolute; bottom: 34px; left: 202px; transform: translateX(-50%); font-family: 'JetBrains Mono', monospace; font-size: 8px; letter-spacing: 0.36em; color: #a8823a; white-space: nowrap;">— TRANQUIL · HEARTFELT · PURE —</div>
 
-        <!-- Booking line, top right. Victory's slot here held a decorative
-             "EST · 2021" bottom-right and was styled to disappear — 7px ivory at
-             30% opacity. A number people are meant to dial cannot be a ghost, so
-             this is 8px solid gold. The top-right corner carries no ornament (they
-             sit top-left and bottom-right) and the QR panel starts ~120px down, so
-             the line has the corner to itself. -->
-        <div style="position: absolute; top: 20px; right: 24px; font-family: 'JetBrains Mono', monospace; font-size: 8px; color: #d9b56a; letter-spacing: 0.15em; white-space: nowrap;">RESERVATIONS · +91 90634 95100</div>
+        <!-- Booking line, top right -->
+        <div style="position: absolute; top: 20px; right: 24px; font-family: 'JetBrains Mono', monospace; font-size: 8px; color: #a8823a; letter-spacing: 0.15em; white-space: nowrap;">RESERVATIONS · +91 90634 95100</div>
       </div>
 
       <div style="display: flex; justify-content: space-between; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #7a6f5a; letter-spacing: 0.08em;">
-        <span>FRONT — details + tap · soft-touch black 400gsm</span>
-        <span>BACK — brand mark + QR · gold foil + spot UV</span>
+        <span>FRONT — details + tap · premium white cardstock 400gsm</span>
+        <span>BACK — brand mark + QR · brushed gold foil + spot UV</span>
       </div>
     </div>
 
@@ -179,9 +168,7 @@
 
           <!-- NFC tap zone · chip sits centred behind this mark -->
           <div style="display: flex; flex-direction: column; align-items: center; gap: 6px; flex-shrink: 0;">
-            <div style="position: relative; width: 34px; height: 34px; display: grid; place-items: center;">
-              <div style="position: absolute; inset: 0; border-radius: 50%; border: 1.5px solid #d9b56a; opacity: 0.4; animation: pulse-ring 2.2s ease-out infinite;"></div>
-              <div style="position: absolute; inset: 0; border-radius: 50%; border: 1.5px solid #d9b56a; opacity: 0.4; animation: pulse-ring 2.2s ease-out infinite; animation-delay: 1.1s;"></div>
+            <div style="position: relative; width: 34px; height: 34px; display: grid; place-items: center; border-radius: 50%; border: 1.5px solid rgba(217,181,106,0.4);">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 8 C 8 8, 8 16, 4 16" stroke="#d9b56a" stroke-width="1.8" stroke-linecap="round"/><path d="M9 5 C 17 5, 17 19, 9 19" stroke="#d9b56a" stroke-width="1.8" stroke-linecap="round"/><path d="M14 2 C 24 2, 24 22, 14 22" stroke="#d9b56a" stroke-width="1.8" stroke-linecap="round"/></svg>
             </div>
             <div style="font-family: 'JetBrains Mono', monospace; font-size: 8px; letter-spacing: 0.22em; color: #d9b56a; text-transform: uppercase;">Tap</div>
@@ -261,104 +248,102 @@
 
   <div style="display: flex; flex-wrap: wrap; gap: 56px; align-items: flex-start;">
 
-    <!-- ============= OPTION 3A · MIDNIGHT OBSIDIAN ============= -->
+    <!-- ============= OPTION 3A · WHITE & GOLD ============= -->
     <div id="3a" style="flex: 1 1 560px; min-width: 520px; display: flex; flex-direction: column; gap: 20px;">
       <div style="display: flex; align-items: center; gap: 12px;">
-        <span style="background: #17140f; color: #d9b56a; font-family: 'JetBrains Mono', monospace; font-size: 12px; padding: 4px 10px; border-radius: 2px; letter-spacing: 0.08em;">3A</span>
-        <h2 style="font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 26px; margin: 0;">Midnight Obsidian</h2>
-        <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #7a6f5a; letter-spacing: 0.06em;">soft-touch black · brushed gold foil</span>
+        <span style="background: #ffffff; color: #17140f; border: 1px solid #d4cdbf; font-family: 'JetBrains Mono', monospace; font-size: 12px; padding: 4px 10px; border-radius: 2px; letter-spacing: 0.08em;">3A</span>
+        <h2 style="font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 26px; margin: 0;">White &amp; Gold Classic</h2>
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #7a6f5a; letter-spacing: 0.06em;">premium white card · brushed gold foil</span>
       </div>
 
       <!-- FRONT -->
-      <div style="width: 560px; height: 360px; border-radius: 6px; position: relative; overflow: hidden; background: linear-gradient(180deg, #14110c 0%, #0a0906 100%); box-shadow: 0 30px 60px -20px rgba(10,9,6,0.5); color: #f2ead8; padding: 32px 40px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between;">
-        <div style="position: absolute; inset: 14px; border: 1px solid rgba(217,181,106,0.18); border-radius: 2px; pointer-events: none;"></div>
+      <div style="width: 560px; height: 360px; border-radius: 6px; position: relative; overflow: hidden; background: #ffffff; box-shadow: 0 30px 60px -20px rgba(10,9,6,0.18), 0 0 0 1px rgba(23,20,15,0.08) inset; color: #17140f; padding: 32px 40px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between;">
+        <div style="position: absolute; inset: 14px; border: 1px solid rgba(168,130,58,0.35); border-radius: 2px; pointer-events: none;"></div>
 
         <!-- top row: the person, and the tap target top-right -->
         <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 24px;">
           <div>
             <img class="sr-mark" src="./assets/serene/serene-emblem.svg" alt="Serene Resort &amp; Convention" style="height: 30px; margin-bottom: 14px;">
-            <div style="font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.24em; color: #d9b56a; text-transform: uppercase;">Director</div>
-            <div style="font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 34px; margin-top: 6px; line-height: 1;">Pawan S Rana</div>
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.24em; color: #a8823a; text-transform: uppercase;">Director</div>
+            <div style="font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 34px; margin-top: 6px; line-height: 1; color: #17140f;">Pawan S Rana</div>
           </div>
 
           <!-- NFC tap zone · chip sits centred behind this mark -->
           <div style="display: flex; flex-direction: column; align-items: center; gap: 6px; flex-shrink: 0;">
-            <div style="position: relative; width: 34px; height: 34px; display: grid; place-items: center;">
-              <div style="position: absolute; inset: 0; border-radius: 50%; border: 1.5px solid #d9b56a; opacity: 0.4; animation: pulse-ring 2.2s ease-out infinite;"></div>
-              <div style="position: absolute; inset: 0; border-radius: 50%; border: 1.5px solid #d9b56a; opacity: 0.4; animation: pulse-ring 2.2s ease-out infinite; animation-delay: 1.1s;"></div>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 8 C 8 8, 8 16, 4 16" stroke="#d9b56a" stroke-width="1.8" stroke-linecap="round"/><path d="M9 5 C 17 5, 17 19, 9 19" stroke="#d9b56a" stroke-width="1.8" stroke-linecap="round"/><path d="M14 2 C 24 2, 24 22, 14 22" stroke="#d9b56a" stroke-width="1.8" stroke-linecap="round"/></svg>
+            <div style="position: relative; width: 34px; height: 34px; display: grid; place-items: center; border-radius: 50%; border: 1.5px solid rgba(168,130,58,0.4);">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 8 C 8 8, 8 16, 4 16" stroke="#a8823a" stroke-width="1.8" stroke-linecap="round"/><path d="M9 5 C 17 5, 17 19, 9 19" stroke="#a8823a" stroke-width="1.8" stroke-linecap="round"/><path d="M14 2 C 24 2, 24 22, 14 22" stroke="#a8823a" stroke-width="1.8" stroke-linecap="round"/></svg>
             </div>
-            <div style="font-family: 'JetBrains Mono', monospace; font-size: 8px; letter-spacing: 0.22em; color: #d9b56a; text-transform: uppercase;">Tap</div>
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 8px; letter-spacing: 0.22em; color: #a8823a; text-transform: uppercase;">Tap</div>
           </div>
         </div>
 
         <!-- divider with dot -->
         <div style="display: flex; align-items: center; gap: 12px;">
-          <div style="flex: 1; height: 1px; background: linear-gradient(90deg, transparent, rgba(217,181,106,0.5), transparent);"></div>
-          <div style="width: 5px; height: 5px; background: #d9b56a; transform: rotate(45deg);"></div>
-          <div style="flex: 1; height: 1px; background: linear-gradient(90deg, transparent, rgba(217,181,106,0.5), transparent);"></div>
+          <div style="flex: 1; height: 1px; background: linear-gradient(90deg, transparent, rgba(168,130,58,0.45), transparent);"></div >
+          <div style="width: 5px; height: 5px; background: #a8823a; transform: rotate(45deg);"></div>
+          <div style="flex: 1; height: 1px; background: linear-gradient(90deg, transparent, rgba(168,130,58,0.45), transparent);"></div>
         </div>
 
         <!-- info grid -->
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 22px 32px;">
           <div>
-            <div style="font-family: 'JetBrains Mono', monospace; font-size: 8px; letter-spacing: 0.24em; color: #d9b56a; text-transform: uppercase; margin-bottom: 4px;">Mobile</div>
-            <div style="font-family: 'Inter', sans-serif; font-weight: 400; font-size: 14px; letter-spacing: 0.02em;">+91 84276 57535</div>
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 8px; letter-spacing: 0.24em; color: #a8823a; text-transform: uppercase; margin-bottom: 4px;">Mobile</div>
+            <div style="font-family: 'Inter', sans-serif; font-weight: 400; font-size: 14px; letter-spacing: 0.02em; color: #17140f;">+91 84276 57535</div>
           </div>
           <div>
-            <div style="font-family: 'JetBrains Mono', monospace; font-size: 8px; letter-spacing: 0.24em; color: #d9b56a; text-transform: uppercase; margin-bottom: 4px;">Email</div>
-            <div style="font-family: 'Inter', sans-serif; font-weight: 400; font-size: 14px;">pawan.s.rana@victoryhotels.in</div>
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 8px; letter-spacing: 0.24em; color: #a8823a; text-transform: uppercase; margin-bottom: 4px;">Email</div>
+            <div style="font-family: 'Inter', sans-serif; font-weight: 400; font-size: 14px; color: #17140f;">pawan.s.rana@victoryhotels.in</div>
           </div>
           <div>
-            <div style="font-family: 'JetBrains Mono', monospace; font-size: 8px; letter-spacing: 0.24em; color: #d9b56a; text-transform: uppercase; margin-bottom: 4px;">Resort</div>
-            <!-- Same weight and full ivory as the phone and email beside it; only
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 8px; letter-spacing: 0.24em; color: #a8823a; text-transform: uppercase; margin-bottom: 4px;">Resort</div>
+            <!-- Same weight and full tone as the phone and email beside it; only
                  the size steps down, because the address needs three lines. -->
-            <div style="font-family: 'Inter', sans-serif; font-weight: 400; font-size: 12px; line-height: 1.5;">Adjacent to ORR Exit 16,<br>Pedda Shapur Village,<br>Shamshabad, Hyderabad 509325</div>
+            <div style="font-family: 'Inter', sans-serif; font-weight: 400; font-size: 12px; line-height: 1.5; color: #17140f;">Adjacent to ORR Exit 16,<br>Pedda Shapur Village,<br>Shamshabad, Hyderabad 509325</div>
           </div>
           <div>
-            <div style="font-family: 'JetBrains Mono', monospace; font-size: 8px; letter-spacing: 0.24em; color: #d9b56a; text-transform: uppercase; margin-bottom: 4px;">Web</div>
-            <div style="font-family: 'Inter', sans-serif; font-weight: 400; font-size: 14px;">sereneresort.in</div>
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 8px; letter-spacing: 0.24em; color: #a8823a; text-transform: uppercase; margin-bottom: 4px;">Web</div>
+            <div style="font-family: 'Inter', sans-serif; font-weight: 400; font-size: 14px; color: #17140f;">sereneresort.in</div>
           </div>
         </div>
       </div>
 
       <!-- BACK -->
-      <div style="width: 560px; height: 360px; border-radius: 6px; position: relative; overflow: hidden; background: radial-gradient(120% 100% at 100% 0%, #2a251c 0%, #14110c 55%, #0a0906 100%); box-shadow: 0 30px 60px -20px rgba(10,9,6,0.5), 0 2px 0 rgba(255,255,255,0.04) inset; color: #f2ead8;">
+      <div style="width: 560px; height: 360px; border-radius: 6px; position: relative; overflow: hidden; background: #ffffff; box-shadow: 0 30px 60px -20px rgba(10,9,6,0.18), 0 0 0 1px rgba(23,20,15,0.08) inset; color: #17140f;">
         <!-- micro texture -->
-        <div style="position: absolute; inset: 0; background-image: radial-gradient(rgba(255,255,255,0.03) 1px, transparent 1px); background-size: 3px 3px; opacity: 0.5;"></div>
+        <div style="position: absolute; inset: 0; background-image: radial-gradient(rgba(23,20,15,0.03) 1px, transparent 1px); background-size: 3px 3px; opacity: 0.5;"></div>
         <!-- gold hairline frame -->
-        <div style="position: absolute; inset: 14px; border: 1px solid rgba(217,181,106,0.28); border-radius: 2px; pointer-events: none;"></div>
+        <div style="position: absolute; inset: 14px; border: 1px solid rgba(168,130,58,0.35); border-radius: 2px; pointer-events: none;"></div>
         <!-- gold corner ornaments -->
-        <div style="position: absolute; top: 20px; left: 20px; width: 22px; height: 22px; border-top: 1.5px solid #d9b56a; border-left: 1.5px solid #d9b56a;"></div>
-        <div style="position: absolute; bottom: 20px; right: 20px; width: 22px; height: 22px; border-bottom: 1.5px solid #d9b56a; border-right: 1.5px solid #d9b56a;"></div>
+        <div style="position: absolute; top: 20px; left: 20px; width: 22px; height: 22px; border-top: 1.5px solid #a8823a; border-left: 1.5px solid #a8823a;"></div>
+        <div style="position: absolute; bottom: 20px; right: 20px; width: 22px; height: 22px; border-bottom: 1.5px solid #a8823a; border-right: 1.5px solid #a8823a;"></div>
 
         <!-- Brand mark, centred in the left field; QR takes the right -->
         <div style="position: absolute; left: 0; top: 0; bottom: 0; width: 404px; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 16px;">
           <img class="sr-mark" src="./assets/serene/serene-emblem.svg" alt="Serene Resort &amp; Convention" style="height: 78px;">
           <div style="text-align: center;">
-            <div style="font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 30px; letter-spacing: 0.32em; padding-left: 0.32em; color: #f2ead8;">SERENE</div>
-            <div style="font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.42em; color: #d9b56a; margin-top: 6px;">RESORT · CONVENTION</div>
+            <div style="font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 30px; letter-spacing: 0.32em; padding-left: 0.32em; color: #17140f;">SERENE</div>
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.42em; color: #a8823a; margin-top: 6px;">RESORT · CONVENTION</div>
           </div>
         </div>
 
-        <!-- QR panel · the light pad is the code's quiet zone, keep it clear -->
+        <!-- QR panel · quiet zone frame -->
         <div style="position: absolute; right: 36px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; align-items: center; gap: 9px;">
-          <div style="background: #f5efe3; border-radius: 8px; padding: 11px; box-shadow: 0 0 0 1px rgba(217,181,106,0.35);">
+          <div style="background: #ffffff; border-radius: 8px; padding: 11px; box-shadow: 0 0 0 1px rgba(168,130,58,0.35), 0 2px 8px rgba(0,0,0,0.06);">
             <img class="sr-qr" src="./assets/serene/serene-qr.svg" alt="Scan to open the Serene Resort card" style="width: 80px; height: 80px;">
           </div>
-          <div style="font-family: 'JetBrains Mono', monospace; font-size: 7.5px; letter-spacing: 0.18em; color: rgba(217,181,106,0.85); text-transform: uppercase;">Scan to save contact</div>
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 7.5px; letter-spacing: 0.18em; color: #7a6f5a; text-transform: uppercase;">Scan to save contact</div>
         </div>
 
         <!-- bottom rule · centred under the mark, not the card -->
-        <div style="position: absolute; bottom: 34px; left: 202px; transform: translateX(-50%); font-family: 'JetBrains Mono', monospace; font-size: 8px; letter-spacing: 0.36em; color: rgba(217,181,106,0.7); white-space: nowrap;">— TRANQUIL · HEARTFELT · PURE —</div>
+        <div style="position: absolute; bottom: 34px; left: 202px; transform: translateX(-50%); font-family: 'JetBrains Mono', monospace; font-size: 8px; letter-spacing: 0.36em; color: #a8823a; white-space: nowrap;">— TRANQUIL · HEARTFELT · PURE —</div>
 
         <!-- booking line · see 2A back, solid gold so it can actually be dialled -->
-        <div style="position: absolute; top: 20px; right: 24px; font-family: 'JetBrains Mono', monospace; font-size: 8px; color: #d9b56a; letter-spacing: 0.15em; white-space: nowrap;">RESERVATIONS · +91 90634 95100</div>
+        <div style="position: absolute; top: 20px; right: 24px; font-family: 'JetBrains Mono', monospace; font-size: 8px; color: #a8823a; letter-spacing: 0.15em; white-space: nowrap;">RESERVATIONS · +91 90634 95100</div>
       </div>
 
       <div style="display: flex; justify-content: space-between; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #7a6f5a; letter-spacing: 0.08em;">
-        <span>FRONT — details + tap · soft-touch black 400gsm</span>
-        <span>BACK — brand mark + QR · gold foil + spot UV</span>
+        <span>FRONT — details + tap · premium white cardstock 400gsm</span>
+        <span>BACK — brand mark + QR · brushed gold foil + spot UV</span>
       </div>
     </div>
 
@@ -384,9 +369,7 @@
 
           <!-- NFC tap zone · chip sits centred behind this mark -->
           <div style="display: flex; flex-direction: column; align-items: center; gap: 6px; flex-shrink: 0;">
-            <div style="position: relative; width: 34px; height: 34px; display: grid; place-items: center;">
-              <div style="position: absolute; inset: 0; border-radius: 50%; border: 1.5px solid #d9b56a; opacity: 0.4; animation: pulse-ring 2.2s ease-out infinite;"></div>
-              <div style="position: absolute; inset: 0; border-radius: 50%; border: 1.5px solid #d9b56a; opacity: 0.4; animation: pulse-ring 2.2s ease-out infinite; animation-delay: 1.1s;"></div>
+            <div style="position: relative; width: 34px; height: 34px; display: grid; place-items: center; border-radius: 50%; border: 1.5px solid rgba(217,181,106,0.4);">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 8 C 8 8, 8 16, 4 16" stroke="#d9b56a" stroke-width="1.8" stroke-linecap="round"/><path d="M9 5 C 17 5, 17 19, 9 19" stroke="#d9b56a" stroke-width="1.8" stroke-linecap="round"/><path d="M14 2 C 24 2, 24 22, 14 22" stroke="#d9b56a" stroke-width="1.8" stroke-linecap="round"/></svg>
             </div>
             <div style="font-family: 'JetBrains Mono', monospace; font-size: 8px; letter-spacing: 0.22em; color: #d9b56a; text-transform: uppercase;">Tap</div>
@@ -472,11 +455,8 @@
           </div>
         </div>
       </div>
-      <!-- pulse where card meets phone -->
-      <div style="position: absolute; left: 140px; top: 130px; width: 30px; height: 30px; display: grid; place-items: center;">
-        <div style="position: absolute; inset: 0; border-radius: 50%; border: 1.5px solid #d9b56a; animation: pulse-ring 1.8s ease-out infinite;"></div>
-        <div style="position: absolute; inset: 0; border-radius: 50%; border: 1.5px solid #d9b56a; animation: pulse-ring 1.8s ease-out infinite; animation-delay: 0.9s;"></div>
-      </div>
+      <!-- tap indicator where card meets phone -->
+      <div style="position: absolute; left: 140px; top: 130px; width: 30px; height: 30px; border-radius: 50%; border: 1.5px solid #d9b56a; opacity: 0.4;"></div>
     </div>
 
     <div style="flex: 1;">
@@ -512,7 +492,7 @@
   </div>
 
   <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #7a6f5a; letter-spacing: 0.06em; text-align: center;">
-    Pick a direction — <a href="#2a">2a</a> for a discreet, night-luxury feel · <a href="#2b">2b</a> for an editorial daylight tone. Both carry the same NFC payload.
+    Pick a direction — <a href="#2a">2a</a> for a crisp white &amp; brushed gold classic · <a href="#2b">2b</a> for an editorial daylight tone. Both carry the same NFC payload.
   </div>
 
 </section>
